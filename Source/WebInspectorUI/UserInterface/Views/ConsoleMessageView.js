@@ -91,7 +91,7 @@ WI.ConsoleMessageView = class ConsoleMessageView extends WI.Object
         }
 
         // FIXME: The location link should include stack trace information.
-        this._appendLocationLink();
+        this._appendLocationLink(object.stackTrace);
 
         this._messageBodyElement = this._element.appendChild(document.createElement("span"));
         this._messageBodyElement.classList.add("console-top-level-message", "console-message-body");
