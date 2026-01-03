@@ -57,6 +57,7 @@
 #include "JSWebAssemblyInstance.h"
 #include "JSWebAssemblyStruct.h"
 #include "ProbeContext.h"
+#include "ProfilerSupport.h"
 #include "ScratchRegisterAllocator.h"
 #include "WasmBaselineData.h"
 #include "WasmBranchHints.h"
@@ -6767,6 +6768,16 @@ Expected<std::unique_ptr<InternalFunction>, String> parseAndCompileOMG(Compilati
 
     Wasm::Thunks::singleton().stub(Wasm::catchInWasmThunkGenerator);
 
+    RefPtr<JSON::Object> ionGraphFunction;
+    RefPtr<JSON::Array> ionGraphPasses;
+    auto functionIndexSpace = info.toSpaceIndex(profiledCallee.functionIndex());
+    if (Options::dumpIonGraph()) [[unlikely]] {
+        ionGraphFunction = JSON::Object::create();
+        auto passes = JSON::Array::create();
+        ionGraphPasses = passes.get();
+        ionGraphFunction->setString("name"_s, makeString(IndexOrName(functionIndexSpace, info.nameSection->get(functionIndexSpace))));
+        ionGraphFunction->setArray("passes"_s, WTF::move(passes));
+    }
     auto result = makeUnique<InternalFunction>();
     InliningDecision inliningDecision(module, profiledCallee);
     inliningDecision.expand();
@@ -6784,6 +6795,8 @@ Expected<std::unique_ptr<InternalFunction>, String> parseAndCompileOMG(Compilati
         if (auto* impl = origin.maybeWasmOrigin())
             out.print("Wasm: ", impl->m_opcodeOrigin, " CallSiteIndex: ", impl->m_callSiteIndex.bits());
     });
+    if (ionGraphPasses) [[unlikely]]
+        procedure.setIonGraphPasses(*ionGraphPasses);
 
     // This means we cannot use either StackmapGenerationParams::usedRegisters() or
     // StackmapGenerationParams::unavailableRegisters(). In exchange for this concession, we
@@ -6840,6 +6853,9 @@ Expected<std::unique_ptr<InternalFunction>, String> parseAndCompileOMG(Compilati
             checkSize = stackCheckNotNeeded;
         uncheckedDowncast<OMGOSREntryCallee>(callee).setStackCheckSize(checkSize);
     }
+
+    if (ionGraphFunction) [[unlikely]]
+        ProfilerSupport::dumpIonGraphFunction(makeString("wasm-function-"_s, functionIndexSpace.rawIndex()), ionGraphFunction.releaseNonNull());
 
     return result;
 }

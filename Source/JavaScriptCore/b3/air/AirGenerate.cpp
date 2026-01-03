@@ -70,7 +70,10 @@ void prepareForGeneration(Code& code)
     
     // We don't expect the incoming code to have predecessors computed.
     code.resetReachability();
-    
+
+    if (Options::dumpIonGraph()) [[unlikely]]
+        code.appendIonGraphPass("InitialCFG"_s);
+
     if (shouldValidateIR())
         validate(code);
 

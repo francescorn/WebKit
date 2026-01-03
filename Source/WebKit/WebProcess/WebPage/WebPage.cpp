@@ -9747,48 +9747,6 @@ void WebPage::requestAllTargetableElements(float hitTestInterval, CompletionHand
     completion(page->checkedElementTargetingController()->findAllTargets(hitTestInterval));
 }
 
-void WebPage::requestTextExtraction(TextExtraction::Request&& request, CompletionHandler<void(TextExtraction::Item&&)>&& completion)
-{
-    completion(TextExtraction::extractItem(WTF::move(request), Ref { *corePage() }));
-}
-
-void WebPage::takeSnapshotOfExtractedText(TextExtraction::ExtractedText&& extractedText, CompletionHandler<void(RefPtr<TextIndicator>&&)>&& completion)
-{
-    RefPtr frame = m_mainFrame->coreLocalFrame();
-    if (!frame) {
-        // FIXME: This logic will be moved into WebFrame once support for extracting content from subframes is
-        // implemented, at which point we should use the WebFrame's local frame. Until then, we only support
-        // content in the main frame anyways.
-        return completion({ });
-    }
-
-    auto range = TextExtraction::rangeForExtractedText(*frame, WTF::move(extractedText));
-    if (!range)
-        return completion({ });
-
-    using enum WebCore::TextIndicatorOption;
-    constexpr OptionSet options {
-        RespectTextColor,
-        PaintBackgrounds,
-        PaintAllContent,
-        TightlyFitContent,
-        UseBoundingRectAndPaintAllContentForComplexRanges,
-        DoNotClipToVisibleRect
-    };
-
-    completion(TextIndicator::createWithRange(*range, options, TextIndicatorPresentationTransition::None));
-}
-
-void WebPage::describeTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(TextExtraction::InteractionDescription&&)>&& completion)
-{
-    completion(TextExtraction::interactionDescription(interaction, Ref { *corePage() }));
-}
-
-void WebPage::handleTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(bool, String&&)>&& completion)
-{
-    TextExtraction::handleInteraction(WTF::move(interaction), Ref { *corePage() }, WTF::move(completion));
-}
-
 void WebPage::hasTextExtractionFilterRules(CompletionHandler<void(bool)>&& completion)
 {
     completion(!m_textExtractionFilterRules.isEmpty());

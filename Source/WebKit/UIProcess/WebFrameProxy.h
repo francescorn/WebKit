@@ -64,6 +64,7 @@ class FrameTreeSyncData;
 class ResourceRequest;
 class SecurityOriginData;
 class ShareableBitmapHandle;
+class TextIndicator;
 
 struct FocusEventData;
 struct FrameIdentifierType;
@@ -76,6 +77,14 @@ enum class MouseEventPolicy : uint8_t;
 enum class ResourceResponseSource : uint8_t;
 enum class SandboxFlag : uint16_t;
 enum class ScrollbarMode : uint8_t;
+
+namespace TextExtraction {
+struct ExtractedText;
+struct InteractionDescription;
+struct Interaction;
+struct Item;
+struct Request;
+}
 
 using FrameIdentifier = ObjectIdentifier<FrameIdentifierType>;
 using NavigationIdentifier = ObjectIdentifier<NavigationIdentifierType, uint64_t>;
@@ -279,6 +288,11 @@ public:
     template<typename M> void send(M&&);
 
     void sendMessageToInspectorFrontend(const String& targetId, const String& message);
+
+    void requestTextExtraction(WebCore::TextExtraction::Request&&, CompletionHandler<void(WebCore::TextExtraction::Item&&)>&&);
+    void handleTextExtractionInteraction(WebCore::TextExtraction::Interaction&&, CompletionHandler<void(bool, String&&)>&&);
+    void describeTextExtractionInteraction(WebCore::TextExtraction::Interaction&&, CompletionHandler<void(WebCore::TextExtraction::InteractionDescription&&)>&&);
+    void takeSnapshotOfExtractedText(WebCore::TextExtraction::ExtractedText&&, CompletionHandler<void(RefPtr<WebCore::TextIndicator>&&)>&&);
 
 private:
     WebFrameProxy(WebPageProxy&, FrameProcess&, WebCore::FrameIdentifier, WebCore::SandboxFlags, WebCore::ReferrerPolicy, WebCore::ScrollbarMode, WebFrameProxy*, IsMainFrame);

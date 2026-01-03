@@ -17155,41 +17155,6 @@ void WebPageProxy::takeSnapshotForTargetedElement(const API::TargetedElementInfo
     sendWithAsyncReply(Messages::WebPage::TakeSnapshotForTargetedElement(info.nodeIdentifier(), info.documentIdentifier()), WTF::move(completion));
 }
 
-void WebPageProxy::requestTextExtraction(WebCore::TextExtraction::Request&& request, CompletionHandler<void(WebCore::TextExtraction::Item&&)>&& completion)
-{
-    if (!hasRunningProcess())
-        return completion({ });
-    sendWithAsyncReply(Messages::WebPage::RequestTextExtraction(WTF::move(request)), WTF::move(completion));
-}
-
-void WebPageProxy::handleTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(bool, String&&)>&& completion)
-{
-    if (!hasRunningProcess()) {
-        ASSERT_NOT_REACHED();
-        return completion(false, "Internal inconsistency / unexpected state. Please file a bug"_s);
-    }
-
-    sendWithAsyncReply(Messages::WebPage::HandleTextExtractionInteraction(WTF::move(interaction)), WTF::move(completion));
-}
-
-void WebPageProxy::takeSnapshotOfExtractedText(TextExtraction::ExtractedText&& extractedText, CompletionHandler<void(RefPtr<TextIndicator>&&)>&& completion)
-{
-    if (!hasRunningProcess())
-        return completion({ });
-
-    sendWithAsyncReply(Messages::WebPage::TakeSnapshotOfExtractedText(WTF::move(extractedText)), WTF::move(completion));
-}
-
-void WebPageProxy::describeTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(TextExtraction::InteractionDescription&&)>&& completion)
-{
-    if (!hasRunningProcess()) {
-        ASSERT_NOT_REACHED();
-        return completion({ "Internal inconsistency / unexpected state. Please file a bug"_s, { } });
-    }
-
-    sendWithAsyncReply(Messages::WebPage::DescribeTextExtractionInteraction(WTF::move(interaction)), WTF::move(completion));
-}
-
 void WebPageProxy::hasTextExtractionFilterRules(CompletionHandler<void(bool)>&& completion)
 {
     sendWithAsyncReply(Messages::WebPage::HasTextExtractionFilterRules(), WTF::move(completion));

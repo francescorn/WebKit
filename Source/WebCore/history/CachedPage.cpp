@@ -63,7 +63,7 @@ WTF_MAKE_TZONE_ALLOCATED_IMPL(CachedPage);
 CachedPage::CachedPage(Page& page)
     : m_page(page)
     , m_expirationTime(MonotonicTime::now() + page.settings().backForwardCacheExpirationInterval())
-    , m_cachedMainFrame(makeUnique<CachedFrame>(page.mainFrame()))
+    , m_cachedMainFrame(makeUnique<CachedFrame>(page.protectedMainFrame()))
     , m_loadedSubresourceDomains([&] {
         RefPtr localFrame = page.localMainFrame();
         return localFrame ? localFrame->loader().client().loadedSubresourceDomains() : Vector<RegistrableDomain>();
@@ -83,7 +83,7 @@ static void firePageShowEvent(Page& page)
     Ref mainFrame = page.mainFrame();
 
     Vector<Ref<LocalFrame>> childFrames;
-    for (auto* child = mainFrame->tree().traverseNextInPostOrder(CanWrap::Yes); child; child = child->tree().traverseNextInPostOrder(CanWrap::No)) {
+    for (RefPtr child = mainFrame->tree().traverseNextInPostOrder(CanWrap::Yes); child; child = child->tree().traverseNextInPostOrder(CanWrap::No)) {
         if (RefPtr localChild = dynamicDowncast<LocalFrame>(child))
             childFrames.append(localChild.releaseNonNull());
     }
@@ -192,8 +192,8 @@ void CachedPage::restore(Page& page)
 
 void CachedPage::restoreNavigationAPIHistoryItems(LocalFrame& frame, BackForwardController* backForwardController)
 {
-    RefPtr document = frame.document();
-    if (!document || !document->window())
+    RefPtr window = frame.window();
+    if (!window)
         return;
 
     CheckedPtr checkedBackForwardController = backForwardController;
@@ -205,7 +205,7 @@ void CachedPage::restoreNavigationAPIHistoryItems(LocalFrame& frame, BackForward
         auto allItems = checkedBackForwardController->allItems(frame.frameID());
         auto filteredItems = Navigation::filterHistoryItemsForNavigationAPI(WTF::move(allItems), *currentItem);
 
-        document->window()->navigation().updateForReactivation(WTF::move(filteredItems), *currentItem, previousItem.get());
+        window->protectedNavigation()->updateForReactivation(WTF::move(filteredItems), *currentItem, previousItem.get());
     }
 
     for (RefPtr child = frame.tree().firstChild(); child; child = child->tree().nextSibling()) {

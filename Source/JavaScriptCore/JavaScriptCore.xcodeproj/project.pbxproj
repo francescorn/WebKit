@@ -2136,6 +2136,8 @@
 		E3F23A821ECF13FE00978D99 /* Snippet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3F23A7B1ECF13E500978D99 /* Snippet.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E3F429BD2A41742F00C5FEFF /* AirOptimizePairedLoadStore.h in Headers */ = {isa = PBXBuildFile; fileRef = E3F429BB2A41742700C5FEFF /* AirOptimizePairedLoadStore.h */; };
 		E3F52B2B2A8D9BB70080E92D /* NativeCallee.h in Headers */ = {isa = PBXBuildFile; fileRef = E3F52B292A8D9BB60080E92D /* NativeCallee.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		E3FB5BEC2F0886090016B5F5 /* AirDominators.h in Headers */ = {isa = PBXBuildFile; fileRef = E3FB5BEB2F0886090016B5F5 /* AirDominators.h */; };
+		E3FB5BEE2F0886E00016B5F5 /* AirNaturalLoops.h in Headers */ = {isa = PBXBuildFile; fileRef = E3FB5BED2F0886E00016B5F5 /* AirNaturalLoops.h */; };
 		E3FCCB642310A90D00238E72 /* ConstructorKind.h in Headers */ = {isa = PBXBuildFile; fileRef = E3FCCB632310A90D00238E72 /* ConstructorKind.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E3FF75331D9CEA1800C7E16D /* DOMJITGetterSetter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3FF752F1D9CEA1200C7E16D /* DOMJITGetterSetter.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E49DC16C12EF294E00184A1F /* SourceProviderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E49DC15112EF272200184A1F /* SourceProviderCache.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -6040,6 +6042,8 @@
 		E3F429BC2A41742700C5FEFF /* AirOptimizePairedLoadStore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AirOptimizePairedLoadStore.cpp; path = b3/air/AirOptimizePairedLoadStore.cpp; sourceTree = "<group>"; };
 		E3F52B292A8D9BB60080E92D /* NativeCallee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeCallee.h; sourceTree = "<group>"; };
 		E3F52B2A2A8D9BB70080E92D /* NativeCallee.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeCallee.cpp; sourceTree = "<group>"; };
+		E3FB5BEB2F0886090016B5F5 /* AirDominators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AirDominators.h; path = b3/air/AirDominators.h; sourceTree = "<group>"; };
+		E3FB5BED2F0886E00016B5F5 /* AirNaturalLoops.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AirNaturalLoops.h; path = b3/air/AirNaturalLoops.h; sourceTree = "<group>"; };
 		E3FC25102256ECF400583518 /* DoublePredictionFuzzerAgent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DoublePredictionFuzzerAgent.cpp; sourceTree = "<group>"; };
 		E3FC25112256ECF400583518 /* DoublePredictionFuzzerAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoublePredictionFuzzerAgent.h; sourceTree = "<group>"; };
 		E3FCCB632310A90D00238E72 /* ConstructorKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstructorKind.h; sourceTree = "<group>"; };
@@ -6948,6 +6952,7 @@
 				0F10F1A21C420BF0001C07D2 /* AirCustom.h */,
 				79ABB17B1E5CCB570045B9A6 /* AirDisassembler.cpp */,
 				79ABB17C1E5CCB570045B9A6 /* AirDisassembler.h */,
+				E3FB5BEB2F0886090016B5F5 /* AirDominators.h */,
 				0F4570361BE44C910062A629 /* AirEliminateDeadCode.cpp */,
 				0F4570371BE44C910062A629 /* AirEliminateDeadCode.h */,
 				0F6183231C45BF070072450B /* AirEmitShuffle.cpp */,
@@ -6986,6 +6991,7 @@
 				0F6183281C45BF070072450B /* AirLowerMacros.h */,
 				0F5CF9821E9D537500C18692 /* AirLowerStackArgs.cpp */,
 				0F5CF9831E9D537500C18692 /* AirLowerStackArgs.h */,
+				E3FB5BED2F0886E00016B5F5 /* AirNaturalLoops.h */,
 				264091FA1BE2FD4100684DB2 /* AirOpcode.opcodes */,
 				0FB3878C1BFBC44D00E3AB1E /* AirOptimizeBlockOrder.cpp */,
 				0FB3878D1BFBC44D00E3AB1E /* AirOptimizeBlockOrder.h */,
@@ -10627,6 +10633,7 @@
 				0FEC85761BDACDC70080FF74 /* AirCode.h in Headers */,
 				0F10F1A31C420BF0001C07D2 /* AirCustom.h in Headers */,
 				79ABB17E1E5CCB570045B9A6 /* AirDisassembler.h in Headers */,
+				E3FB5BEC2F0886090016B5F5 /* AirDominators.h in Headers */,
 				0F4570391BE44C910062A629 /* AirEliminateDeadCode.h in Headers */,
 				0F61832D1C45BF070072450B /* AirEmitShuffle.h in Headers */,
 				0F4DE1CF1C4C1B54004D6C11 /* AirFixObviousSpills.h in Headers */,
@@ -10649,6 +10656,7 @@
 				0FDF70861D3F2C2500927449 /* AirLowerEntrySwitch.h in Headers */,
 				0F6183311C45BF070072450B /* AirLowerMacros.h in Headers */,
 				0F5CF9841E9D537700C18692 /* AirLowerStackArgs.h in Headers */,
+				E3FB5BEE2F0886E00016B5F5 /* AirNaturalLoops.h in Headers */,
 				0F40E4A71C497F7400A577FA /* AirOpcode.h in Headers */,
 				0F40E4A81C497F7400A577FA /* AirOpcodeGenerated.h in Headers */,
 				0F40E4A91C497F7400A577FA /* AirOpcodeUtils.h in Headers */,

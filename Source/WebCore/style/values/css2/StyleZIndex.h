@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Samuel Weinig <sam@webkit.org>
+ * Copyright (C) 2025-2026 Samuel Weinig <sam@webkit.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,11 +27,9 @@
 #include <WebCore/StylePrimitiveNumeric.h>
 
 namespace WebCore {
-
-class StyleBoxData;
-
 namespace Style {
 
+class BoxData;
 class ComputedStyleBase;
 
 // <'z-index'> = auto | <integer>
@@ -78,14 +76,14 @@ struct ZIndex {
 
 private:
     // NOTE: This type is stored represented using an explicit `bool` and `Value`, rather than a `Variant`, to allow compact
-    // storage and efficient construction in `StyleBoxData`. It is not using a `ValueOrKeyword` to preserve the entire `int`
+    // storage and efficient construction in `BoxData`. It is not using a `ValueOrKeyword` to preserve the entire `int`
     // value range for `z-index`. If we determine its ok for `z-index` to only have `MAX_INT - 1` values, we can switch this
     // out for `ValueOrKeyword` with a custom `MarkableTraits`.
+    friend class BoxData;
     friend class ComputedStyleBase;
     friend class ComputedStyleProperties;
     friend class WebCore::RenderStyle;
     friend class WebCore::RenderStyleProperties;
-    friend class WebCore::StyleBoxData;
 
     constexpr ZIndex(bool isAuto, Value value)
         : m_isAuto { isAuto }

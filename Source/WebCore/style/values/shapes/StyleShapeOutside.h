@@ -28,6 +28,7 @@
 #include <WebCore/StyleBasicShape.h>
 #include <WebCore/StyleImageWrapper.h>
 #include <WebCore/StyleValueTypes.h>
+#include <wtf/RefPtr.h>
 
 namespace WebCore {
 namespace Style {

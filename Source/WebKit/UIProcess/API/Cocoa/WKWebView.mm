@@ -7022,6 +7022,10 @@ static inline std::optional<WebCore::NodeIdentifier> toNodeIdentifier(const Stri
     auto interaction = [self _convertToWebCoreInteraction:wkInteraction];
 
     RefPtr page = _page;
+    RefPtr mainFrame = page->mainFrame();
+    if (!mainFrame)
+        return completionHandler(adoptNS([[_WKTextExtractionInteractionResult alloc] initWithErrorDescription:@"Top browsing context is invalid"]).get());
+
 #if PLATFORM(MAC)
     RetainPtr nativePopup = [self _activePopupButtonCell];
     if (nativePopup && interaction.action == WebCore::TextExtraction::Action::SelectMenuItem && !interaction.text.isEmpty()) {
@@ -7040,7 +7044,7 @@ static inline std::optional<WebCore::NodeIdentifier> toNodeIdentifier(const Stri
     }
 #endif // PLATFORM(MAC)
 
-    page->handleTextExtractionInteraction(WTF::move(interaction), [weakSelf = WeakObjCPtr<WKWebView>(self), weakPage = WeakPtr { *page }, completionHandler = makeBlockPtr(WTF::move(completionHandler))](bool success, String&& description) mutable {
+    mainFrame->handleTextExtractionInteraction(WTF::move(interaction), [weakSelf = WeakObjCPtr<WKWebView>(self), weakPage = WeakPtr { *page }, completionHandler = makeBlockPtr(WTF::move(completionHandler))](bool success, String&& description) mutable {
         RetainPtr<NSString> errorDescription;
         if (!success)
             errorDescription = description.createNSString();
@@ -7141,6 +7145,10 @@ static HashMap<String, HashMap<WebCore::JSHandleIdentifier, String>> extractClie
     if (!self._isValid || !preferences->textExtractionEnabled())
         return completion({ });
 
+    RefPtr mainFrame = _page->mainFrame();
+    if (!mainFrame)
+        return completion({ });
+
     auto rectInWebView = configuration.targetRect;
     bool mergeParagraphs = configuration.mergeParagraphs;
     auto nodeIdentifierInclusion = [&] {
@@ -7179,7 +7187,7 @@ static HashMap<String, HashMap<WebCore::JSHandleIdentifier, String>> extractClie
         .includeTextInAutoFilledControls = !!configuration.includeTextInAutoFilledControls,
     };
 
-    _page->requestTextExtraction(WTF::move(request), WTF::move(completion));
+    mainFrame->requestTextExtraction(WTF::move(request), WTF::move(completion));
 #endif // USE(APPLE_INTERNAL_SDK) || (!PLATFORM(WATCHOS) && !PLATFORM(APPLETV))
 }
 
@@ -7216,13 +7224,17 @@ static HashMap<String, HashMap<WebCore::JSHandleIdentifier, String>> extractClie
     if (!page->protectedPreferences()->textExtractionEnabled())
         return completionHandler(nil, [NSError errorWithDomain:WKErrorDomain code:WKErrorUnknown userInfo:nil]);
 
+    RefPtr mainFrame = page->mainFrame();
+    if (!mainFrame)
+        return completionHandler(nil, [NSError errorWithDomain:WKErrorDomain code:WKErrorUnknown userInfo:nil]);
+
     auto interaction = [self _convertToWebCoreInteraction:wkInteraction];
 #if PLATFORM(MAC)
     if ([self _activePopupButtonCell] && interaction.action == WebCore::TextExtraction::Action::SelectMenuItem && !interaction.text.isEmpty())
         return completionHandler([NSString stringWithFormat:@"Select popup menu item labeled '%s'", interaction.text.utf8().data()], nil);
 #endif
 
-    page->describeTextExtractionInteraction(WTF::move(interaction), [weakSelf = WeakObjCPtr<WKWebView>(self), weakPage = WeakPtr { *page }, completionHandler = makeBlockPtr(WTF::move(completionHandler))](auto&& result) mutable {
+    mainFrame->describeTextExtractionInteraction(WTF::move(interaction), [weakSelf = WeakObjCPtr<WKWebView>(self), weakPage = WeakPtr { *page }, completionHandler = makeBlockPtr(WTF::move(completionHandler))](auto&& result) mutable {
         auto [description, stringsToValidate] = WTF::move(result);
         auto valid = Box<bool>::create(true);
         Ref aggregator = MainRunLoopCallbackAggregator::create([completionHandler = WTF::move(completionHandler), description, valid] {
@@ -7268,7 +7280,11 @@ static HashMap<String, HashMap<WebCore::JSHandleIdentifier, String>> extractClie
         });
     }
 
-    _page->takeSnapshotOfExtractedText({ text, WTF::move(nodeIdentifier) }, [text = text, completionHandler = WTF::move(completionHandler), view = retainPtr(self), textHash](auto textIndicator) mutable {
+    RefPtr mainFrame = _page->mainFrame();
+    if (!mainFrame)
+        return completionHandler(text);
+
+    mainFrame->takeSnapshotOfExtractedText({ text, WTF::move(nodeIdentifier) }, [text = text, completionHandler = WTF::move(completionHandler), view = retainPtr(self), textHash](auto textIndicator) mutable {
         if (!textIndicator)
             return completionHandler(text);
 

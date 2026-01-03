@@ -31,6 +31,8 @@
 #include "AirAllocateRegistersAndStackAndGenerateCode.h"
 #include "AirCCallSpecial.h"
 #include "AirCFG.h"
+#include "AirDominators.h"
+#include "AirNaturalLoops.h"
 #include "AllowMacroScratchRegisterUsageIf.h"
 #include "B3BasicBlockUtils.h"
 #include "B3Procedure.h"
@@ -38,6 +40,7 @@
 #include <wtf/ListDump.h>
 #include <wtf/MathExtras.h>
 #include <wtf/TZoneMallocInlines.h>
+#include <wtf/text/MakeString.h>
 
 namespace JSC { namespace B3 { namespace Air {
 
@@ -361,6 +364,99 @@ bool Code::usesSIMD() const
 {
     return m_proc.usesSIMD();
 }
+
+void Code::setIonGraphPasses(Ref<JSON::Array>&& array)
+{
+    m_ionGraphPasses = WTF::move(array);
+}
+
+void Code::appendIonGraphPass(ASCIILiteral passName)
+{
+    // Right now, IonGraph cannot handle LIR visualization well: it is assuming MIR <-> LIR one on one, but B3/Air has ability to optimize and change Air after lowering from B3.
+    // For now, we render Air as MIR too.
+    auto pass = JSON::Object::create();
+    pass->setString("name"_s, makeString("Air: "_s, passName));
+    {
+        auto ionGraph = JSON::Object::create();
+        auto ionBlocks = JSON::Array::create();
+        ionGraph->setArray("blocks"_s, ionBlocks);
+        unsigned globalIndex = 0;
+        Dominators dominators(*this);
+        NaturalLoops naturalLoops(*this, dominators);
+
+        for (auto* block : *this) {
+            if (!block)
+                continue;
+
+            auto ionBlock = JSON::Object::create();
+            auto attributes = JSON::Array::create();
+            auto predecessors = JSON::Array::create();
+            auto successors = JSON::Array::create();
+            auto instructions = JSON::Array::create();
+
+            for (const auto& inst : *block) {
+                unsigned index = globalIndex++;
+                auto instruction = JSON::Object::create();
+
+                StringPrintStream stream;
+                inst.dump(stream);
+                instruction->setInteger("ptr"_s, index + 1);
+                instruction->setInteger("id"_s, index);
+                instruction->setArray("attributes"_s, JSON::Array::create());
+                instruction->setArray("inputs"_s, JSON::Array::create());
+                instruction->setString("opcode"_s, stream.toString());
+                instruction->setArray("uses"_s, JSON::Array::create());
+                instruction->setArray("memInputs"_s, JSON::Array::create());
+                instruction->setString("type"_s, ""_s);
+
+                instructions->pushObject(WTF::move(instruction));
+            }
+
+            unsigned loopDepth = 0;
+            auto computeWithNaturalLoops = [&](auto& naturalLoops, auto& dominators) {
+                auto isBackEdge = [&](auto* block) -> bool {
+                    for (auto successor : block->successors()) {
+                        if (dominators.dominates(successor.block(), block))
+                            return true;
+                    }
+                    return false;
+                };
+
+                loopDepth = naturalLoops.loopDepth(block);
+                if (isBackEdge(block))
+                    attributes->pushString("backedge"_s);
+                if (auto* loop = naturalLoops.headerOf(block))
+                    attributes->pushString("loopheader"_s);
+            };
+
+            computeWithNaturalLoops(naturalLoops, dominators);
+
+            for (auto* predecessor : block->predecessors())
+                predecessors->pushInteger(predecessor->index());
+
+            for (auto successor : block->successors())
+                successors->pushInteger(successor.block()->index());
+
+            ionBlock->setInteger("ptr"_s, block->index() + 1);
+            ionBlock->setInteger("id"_s, block->index());
+            ionBlock->setInteger("loopDepth"_s, loopDepth);
+            ionBlock->setArray("attributes"_s, WTF::move(attributes));
+            ionBlock->setArray("predecessors"_s, WTF::move(predecessors));
+            ionBlock->setArray("successors"_s, WTF::move(successors));
+            ionBlock->setArray("instructions"_s, WTF::move(instructions));
+            ionBlocks->pushObject(ionBlock);
+        }
+
+        pass->setObject("mir"_s, WTF::move(ionGraph)); // MIR stands for SpiderMonkey's middle-level IR.
+    }
+    {
+        auto ionGraph = JSON::Object::create();
+        ionGraph->setArray("blocks"_s, JSON::Array::create());
+        pass->setObject("lir"_s, WTF::move(ionGraph)); // LIR stands for SpiderMonkey's low-level IR.
+    }
+    RefPtr { m_ionGraphPasses }->pushObject(pass);
+}
+
 
 } } } // namespace JSC::B3::Air
 

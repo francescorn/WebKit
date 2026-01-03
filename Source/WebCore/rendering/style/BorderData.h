@@ -162,7 +162,7 @@ struct BorderData {
     RectEdges<BorderValue> edges;
     Style::BorderRadius radii { Style::BorderRadiusValue { 0_css_px, 0_css_px } };
     Style::CornerShape cornerShapes { Style::CornerShapeValue(CSS::Keyword::Round { }) };
-    DataRef<StyleBorderImageData> borderImage;
+    DataRef<Style::BorderImageData> borderImage;
 };
 
 WTF::TextStream& operator<<(WTF::TextStream&, const BorderData&);

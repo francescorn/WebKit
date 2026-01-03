@@ -50,12 +50,6 @@
 #include <wtf/StdFilesystem.h>
 #endif
 
-#if OS(WINDOWS)
-    constexpr char pathSeparator = '\\';
-#else
-    constexpr char pathSeparator = '/';
-#endif
-
 namespace WTF::FileSystemImpl {
 
 #if HAVE(STD_FILESYSTEM) || HAVE(STD_EXPERIMENTAL_FILESYSTEM)
@@ -714,13 +708,13 @@ String createTemporaryFile(StringView prefix, StringView suffix)
     return path;
 }
 
-FileHandle createDumpFile(StringView filename, StringView path)
+FileHandle createDumpFile(StringView filename, StringView extension, StringView path)
 {
     if (path.isEmpty()) {
-        auto [p, handle] = openTemporaryFile(nullString(), filename);
+        auto [p, handle] = openTemporaryFile(filename, extension);
         return WTF::move(handle);
     }
-    return openFile(makeString(path, pathSeparator, filename), FileOpenMode::Truncate);
+    return openFile(makeString(path, pathSeparator, filename, extension), FileOpenMode::Truncate);
 }
 
 #if !PLATFORM(PLAYSTATION)

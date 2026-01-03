@@ -117,6 +117,7 @@
 #include <WebCore/ShareableBitmapHandle.h>
 #include <WebCore/SharedMemory.h>
 #include <WebCore/SubresourceLoader.h>
+#include <WebCore/TextExtraction.h>
 #include <WebCore/TextIterator.h>
 #include <WebCore/TextResourceDecoder.h>
 #include <WebCore/WebKitJSHandle.h>
@@ -1616,6 +1617,56 @@ void WebFrame::disconnectInspector()
 void WebFrame::sendMessageToInspectorTarget(const String& message)
 {
     ensureInspectorTarget()->sendMessageToTargetBackend(message);
+}
+
+void WebFrame::requestTextExtraction(TextExtraction::Request&& request, CompletionHandler<void(TextExtraction::Item&&)>&& completion)
+{
+    RefPtr frame = coreLocalFrame();
+    if (!frame)
+        return completion({ });
+
+    completion(TextExtraction::extractItem(WTF::move(request), *frame));
+}
+
+void WebFrame::takeSnapshotOfExtractedText(TextExtraction::ExtractedText&& extractedText, CompletionHandler<void(RefPtr<TextIndicator>&&)>&& completion)
+{
+    RefPtr frame = coreLocalFrame();
+    if (!frame)
+        return completion({ });
+
+    auto range = TextExtraction::rangeForExtractedText(*frame, WTF::move(extractedText));
+    if (!range)
+        return completion({ });
+
+    using enum WebCore::TextIndicatorOption;
+    constexpr OptionSet options {
+        RespectTextColor,
+        PaintBackgrounds,
+        PaintAllContent,
+        TightlyFitContent,
+        UseBoundingRectAndPaintAllContentForComplexRanges,
+        DoNotClipToVisibleRect
+    };
+
+    completion(TextIndicator::createWithRange(*range, options, TextIndicatorPresentationTransition::None));
+}
+
+void WebFrame::describeTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(TextExtraction::InteractionDescription&&)>&& completion)
+{
+    RefPtr frame = coreLocalFrame();
+    if (!frame)
+        return completion({ });
+
+    completion(TextExtraction::interactionDescription(interaction, *frame));
+}
+
+void WebFrame::handleTextExtractionInteraction(TextExtraction::Interaction&& interaction, CompletionHandler<void(bool, String&&)>&& completion)
+{
+    RefPtr frame = coreLocalFrame();
+    if (!frame)
+        return completion(false, "Browsing context is unavailable"_s);
+
+    TextExtraction::handleInteraction(WTF::move(interaction), *frame, WTF::move(completion));
 }
 
 } // namespace WebKit

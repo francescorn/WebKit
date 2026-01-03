@@ -66,7 +66,7 @@ HTMLSlotElement::InsertedIntoAncestorResult HTMLSlotElement::insertedIntoAncesto
     ASSERT_UNUSED(insertionResult, insertionResult == InsertedIntoAncestorResult::Done);
 
     if (insertionType.treeScopeChanged && isInShadowTree()) {
-        if (auto* shadowRoot = containingShadowRoot())
+        if (RefPtr shadowRoot = containingShadowRoot())
             shadowRoot->addSlotElementByName(attributeWithoutSynchronization(nameAttr), *this);
     }
 
@@ -76,7 +76,7 @@ HTMLSlotElement::InsertedIntoAncestorResult HTMLSlotElement::insertedIntoAncesto
 void HTMLSlotElement::removedFromAncestor(RemovalType removalType, ContainerNode& oldParentOfRemovedTree)
 {
     if (removalType.treeScopeChanged && oldParentOfRemovedTree.isInShadowTree()) {
-        auto* oldShadowRoot = oldParentOfRemovedTree.containingShadowRoot();
+        RefPtr oldShadowRoot = oldParentOfRemovedTree.containingShadowRoot();
         ASSERT(oldShadowRoot);
         oldShadowRoot->removeSlotElementByName(attributeWithoutSynchronization(nameAttr), *this, oldParentOfRemovedTree);
     }
@@ -89,7 +89,7 @@ void HTMLSlotElement::childrenChanged(const ChildChange& childChange)
     HTMLElement::childrenChanged(childChange);
 
     if (isInShadowTree()) {
-        if (auto* shadowRoot = containingShadowRoot())
+        if (RefPtr shadowRoot = containingShadowRoot())
             shadowRoot->slotFallbackDidChange(*this);
     }
 }
@@ -177,9 +177,9 @@ void HTMLSlotElement::assign(FixedVector<ElementOrText>&& nodes)
 {
     RefPtr shadowRoot = containingShadowRoot();
     RefPtr host = shadowRoot ? shadowRoot->host() : nullptr;
-    for (auto& node : m_manuallyAssignedNodes) {
-        if (RefPtr protectedNode = node.get())
-            protectedNode->setManuallyAssignedSlot(nullptr);
+    for (auto& weakNode : m_manuallyAssignedNodes) {
+        if (RefPtr node = weakNode.get())
+            node->setManuallyAssignedSlot(nullptr);
     }
 
     auto previous = std::exchange(m_manuallyAssignedNodes, { });
@@ -202,7 +202,7 @@ void HTMLSlotElement::assign(FixedVector<ElementOrText>&& nodes)
         shadowRoot->slotManualAssignmentDidChange(*this, previous, m_manuallyAssignedNodes);
     else {
         for (auto& node : m_manuallyAssignedNodes) {
-            if (auto previousSlot = node->manuallyAssignedSlot()) {
+            if (RefPtr previousSlot = node->manuallyAssignedSlot()) {
                 previousSlot->removeManuallyAssignedNode(*node);
                 if (RefPtr shadowRootOfPreviousSlot = previousSlot->containingShadowRoot(); shadowRootOfPreviousSlot && node->parentNode() == shadowRootOfPreviousSlot->host())
                     shadowRootOfPreviousSlot->didRemoveManuallyAssignedNode(*previousSlot, *node);

@@ -178,7 +178,7 @@ static inline uint32_t getCurrentThreadID()
 PerfLog::PerfLog()
 {
     {
-        m_file = FileSystem::createDumpFile(makeString("jit-"_s, getCurrentThreadID(), "-"_s, WTF::getCurrentProcessID(), ".dump"_s), String::fromUTF8(Options::jitDumpDirectory()));
+        m_file = FileSystem::createDumpFile(makeString("jit-"_s, getCurrentThreadID(), "-"_s, WTF::getCurrentProcessID()), ".dump"_s, String::fromUTF8(Options::jitDumpDirectory()));
         RELEASE_ASSERT(m_file);
 
 #if OS(LINUX)

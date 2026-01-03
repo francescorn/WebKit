@@ -32,6 +32,8 @@ class RenderStyle;
 
 namespace Style {
 
+class ComputedStyle;
+
 // The difference between two styles.  The following values are used:
 // - DifferenceResult::Equal - The two styles are identical
 // - DifferenceResult::RecompositeLayer - The layer needs its position and transform updated, but no repaint

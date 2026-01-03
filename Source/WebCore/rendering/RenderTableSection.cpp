@@ -46,7 +46,6 @@
 #include "RenderTextControl.h"
 #include "RenderTreeBuilder.h"
 #include "RenderView.h"
-#include "StyleInheritedData.h"
 #include "StylePrimitiveNumericTypes+Evaluation.h"
 #include <limits>
 #include <ranges>

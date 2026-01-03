@@ -30,7 +30,6 @@
 #if ENABLE(MATHML)
 
 #include "RenderStyle+GettersInlines.h"
-#include "StyleInheritedData.h"
 #include <wtf/StdLibExtras.h>
 
 static const unsigned kRadicalOperator = 0x221A;

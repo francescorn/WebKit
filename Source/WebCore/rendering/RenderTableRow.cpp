@@ -39,7 +39,6 @@
 #include "RenderTableCell.h"
 #include "RenderTreeBuilder.h"
 #include "RenderView.h"
-#include "StyleInheritedData.h"
 #include <wtf/StackStats.h>
 #include <wtf/TZoneMallocInlines.h>
 

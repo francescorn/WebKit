@@ -28,11 +28,11 @@
 
 #if ENABLE(MATHML)
 
+#include "FontMetrics.h"
 #include "RenderBoxInlines.h"
 #include "RenderMathMLBlock.h"
 #include "RenderTableInlines.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 
 namespace WebCore {
 

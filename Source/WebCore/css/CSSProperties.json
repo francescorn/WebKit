@@ -245,7 +245,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "accentColorEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::AccentColor",
                 "color-property": true,
@@ -374,10 +374,10 @@
                 "color-property-traits-color-custom": true,
                 "color-property-traits-visited-link-color-custom": true,
                 "style-extractor-custom": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::CaretColor",
-                "render-style-visited-link-storage-path": ["m_rareInheritedData"],
+                "render-style-visited-link-storage-path": ["m_inheritedRareData"],
                 "parser-grammar": "auto | <color>"
             },
             "specification": {
@@ -869,7 +869,7 @@
             "codegen-properties": {
                 "settings-flag": "cssTextBoxTrimEnabled",
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::TextBoxEdge",
                 "parser-function": "consumeTextBoxEdge",
@@ -1504,7 +1504,7 @@
                 "style-builder-custom": "Value",
                 "render-style-name-for-methods": "TextSizeAdjust",
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::TextSizeAdjust",
                 "parser-grammar": "auto | none | <percentage [0,inf]>"
@@ -1672,7 +1672,7 @@
             "codegen-properties": {
                 "style-builder-custom": "Value",
                 "high-priority": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextZoom",
                 "parser-grammar": "<<values>>"
@@ -1726,7 +1726,7 @@
             "codegen-properties": {
                 "top-priority": true,
                 "top-priority-reason": "This is a top priority property to ensure that its value can be checked when determining a smart default font size', (<https://trac.webkit.org/browser/trunk/Source/WebCore/ChangeLog?rev=172861>).",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "RubyPosition",
                 "parser-grammar": "<<values>>",
@@ -1806,7 +1806,7 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "nonInheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "nonInheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "AlignmentBaseline",
@@ -2470,7 +2470,7 @@
                 "super"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "miscData"],
+                "render-style-storage-path": ["m_svgData", "miscData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGBaselineShift",
                 "parser-grammar": "baseline | sub | super | <length-percentage>"
@@ -2490,7 +2490,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "cssLineClampEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::BlockEllipsis",
                 "parser-grammar": "none | auto | <string>",
@@ -4092,7 +4092,7 @@
                 "static"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "nonInheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "nonInheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "BufferedRendering",
@@ -4223,7 +4223,7 @@
                 "evenodd"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "WindRule",
@@ -4246,7 +4246,7 @@
                 "linearRGB"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "ColorInterpolation",
@@ -4267,7 +4267,7 @@
                 "linearRGB"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "ColorInterpolation",
@@ -4651,7 +4651,7 @@
             "animation-type": "by computed value",
             "initial": "0px",
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGCenterCoordinateComponent",
                 "parser-grammar": "<length-percentage>"
@@ -4665,7 +4665,7 @@
             "animation-type": "by computed value",
             "initial": "0px",
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGCenterCoordinateComponent",
                 "parser-grammar": "<length-percentage>"
@@ -4682,7 +4682,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGPathData",
                 "parser-grammar": "none | <path()>",
@@ -4711,7 +4711,7 @@
                 "text-after-edge"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "nonInheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "nonInheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "DominantBaseline",
@@ -4734,7 +4734,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "supportHDRDisplayEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::DynamicRangeLimit",
                 "parser-function": "consumeDynamicRangeLimit",
@@ -4782,10 +4782,10 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "fillData"],
+                "render-style-storage-path": ["m_svgData", "fillData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGPaint",
-                "render-style-visited-link-storage-path": ["m_svgStyle", "fillData"],
+                "render-style-visited-link-storage-path": ["m_svgData", "fillData"],
                 "color-property": true,
                 "color-property-traits-color-custom": true,
                 "color-property-traits-visited-link-color-custom": true,
@@ -4805,7 +4805,7 @@
             "initial": "1",
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_svgStyle", "fillData"],
+                "render-style-storage-path": ["m_svgData", "fillData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Opacity",
                 "parser-grammar": "<opacity-value>"
@@ -4824,7 +4824,7 @@
                 "evenodd"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "WindRule",
@@ -4871,7 +4871,7 @@
             "initial": "black",
             "codegen-properties": {
                 "color-property": true,
-                "render-style-storage-path": ["m_svgStyle", "miscData"],
+                "render-style-storage-path": ["m_svgData", "miscData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
                 "parser-grammar": "<color>"
@@ -4886,7 +4886,7 @@
             "initial": "1",
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_svgStyle", "miscData"],
+                "render-style-storage-path": ["m_svgData", "miscData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Opacity",
                 "parser-grammar": "<opacity-value>"
@@ -4903,7 +4903,7 @@
             "codegen-properties": {
                 "accepts-quirky-angle": true,
                 "render-style-initial-custom": true,
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::SVGGlyphOrientationHorizontal",
@@ -4923,7 +4923,7 @@
             ],
             "codegen-properties": {
                 "accepts-quirky-angle": true,
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::SVGGlyphOrientationVertical",
@@ -4946,7 +4946,7 @@
                 "last"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::HangingPunctuation",
                 "parser-grammar": "none | [ first || [ force-end | allow-end ] || last ]@(preserve-order no-single-item-opt)"
@@ -5023,7 +5023,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::ImageOrientation",
                 "parser-grammar": "<<values>>",
@@ -5068,7 +5068,7 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "ImageRendering",
                 "parser-grammar": "<<values>>"
@@ -5337,7 +5337,7 @@
             "initial": "white",
             "codegen-properties": {
                 "color-property": true,
-                "render-style-storage-path": ["m_svgStyle", "miscData"],
+                "render-style-storage-path": ["m_svgData", "miscData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
                 "parser-grammar": "<color>"
@@ -5363,7 +5363,7 @@
             "codegen-properties": {
                 "settings-flag": "cssLineFitEdgeEnabled",
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::LineFitEdge",
                 "parser-function": "consumeLineFitEdge",
@@ -5436,7 +5436,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::ImageOrNone",
                 "parser-grammar": "<image> | none"
@@ -5568,7 +5568,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::ListStyleType",
                 "parser-grammar": "<counter-style> | <string> | none",
@@ -5858,7 +5858,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedResourceData"],
+                "render-style-storage-path": ["m_svgData", "markerResourceData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGMarkerResource",
                 "parser-grammar": "none | <marker-ref>"
@@ -5876,7 +5876,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedResourceData"],
+                "render-style-storage-path": ["m_svgData", "markerResourceData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGMarkerResource",
                 "parser-grammar": "none | <marker-ref>"
@@ -5894,7 +5894,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedResourceData"],
+                "render-style-storage-path": ["m_svgData", "markerResourceData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGMarkerResource",
                 "parser-grammar": "none | <marker-ref>"
@@ -6342,7 +6342,7 @@
                 "alpha"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "nonInheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "nonInheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "MaskType",
@@ -6365,7 +6365,7 @@
                 "top-priority": true,
                 "top-priority-reason": "This is top priority since it affects 'font-size', which is 'high-priority'",
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::MathDepth",
                 "parser-grammar": "auto-add | add(<integer>) | <integer>"
@@ -6384,7 +6384,7 @@
                 "compact"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "MathShift",
                 "parser-grammar": "<<values>>"
@@ -6403,7 +6403,7 @@
                 "compact"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "MathStyle",
                 "parser-grammar": "<<values>>"
@@ -7070,7 +7070,7 @@
             "codegen-properties": {
                 "style-extractor-custom": true,
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Orphans",
                 "parser-grammar": "<integer [1,inf]>"
@@ -7238,7 +7238,7 @@
                 "aliases": [
                     "word-wrap"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "OverflowWrap",
                 "parser-grammar": "<<values>>"
@@ -7763,7 +7763,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::SVGPaintOrder",
                 "parser-function": "consumePaintOrder",
@@ -7841,7 +7841,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Quotes",
                 "parser-function": "consumeQuotes",
@@ -7859,7 +7859,7 @@
             "animation-type": "by computed value",
             "initial": "0px",
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGRadius",
                 "parser-grammar": "<length-percentage [0,inf]>"
@@ -7932,7 +7932,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "cssRubyAlignEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "RubyAlign",
                 "parser-grammar": "<<values>>"
@@ -7954,7 +7954,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "cssRubyOverhangEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "RubyOverhang",
                 "parser-grammar": "<<values>>"
@@ -7972,7 +7972,7 @@
                 "auto"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGRadiusComponent",
                 "parser-grammar": "auto | <length-percentage [0,inf]>"
@@ -7989,7 +7989,7 @@
                 "auto"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGRadiusComponent",
                 "parser-grammar": "auto | <length-percentage [0,inf]>"
@@ -8010,7 +8010,7 @@
                 "geometricPrecision"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "ShapeRendering",
@@ -8026,7 +8026,7 @@
             "initial": "black",
             "codegen-properties": {
                 "color-property": true,
-                "render-style-storage-path": ["m_svgStyle", "stopData"],
+                "render-style-storage-path": ["m_svgData", "stopData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
                 "parser-grammar": "<color>"
@@ -8041,7 +8041,7 @@
             "initial": "1",
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_svgStyle", "stopData"],
+                "render-style-storage-path": ["m_svgData", "stopData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Opacity",
                 "parser-grammar": "<opacity-value>"
@@ -8067,10 +8067,10 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "strokeData"],
+                "render-style-storage-path": ["m_svgData", "strokeData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGPaint",
-                "render-style-visited-link-storage-path": ["m_svgStyle", "strokeData"],
+                "render-style-visited-link-storage-path": ["m_svgData", "strokeData"],
                 "color-property": true,
                 "color-property-traits-color-custom": true,
                 "color-property-traits-visited-link-color-custom": true,
@@ -8094,7 +8094,7 @@
             "codegen-properties": {
                 "animation-wrapper-requires-non-additive-or-cumulative-interpolation": true,
                 "render-style-name-for-methods": "StrokeDashArray",
-                "render-style-storage-path": ["m_svgStyle", "strokeData"],
+                "render-style-storage-path": ["m_svgData", "strokeData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGStrokeDasharray",
                 "parser-function": "consumeStrokeDasharray",
@@ -8114,7 +8114,7 @@
             "initial": "0",
             "codegen-properties": {
                 "render-style-name-for-methods": "StrokeDashOffset",
-                "render-style-storage-path": ["m_svgStyle", "strokeData"],
+                "render-style-storage-path": ["m_svgData", "strokeData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGStrokeDashoffset",
                 "parser-grammar": "<length-percentage> | <number>"
@@ -8135,7 +8135,7 @@
             ],
             "codegen-properties": {
                 "render-style-name-for-methods": "CapStyle",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "LineCap",
                 "parser-grammar": "<<values>>"
@@ -8159,7 +8159,7 @@
             ],
             "codegen-properties": {
                 "render-style-name-for-methods": "JoinStyle",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "LineJoin",
                 "parser-grammar": "<<values>>",
@@ -8180,7 +8180,7 @@
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
                 "render-style-name-for-methods": "StrokeMiterLimit",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::StrokeMiterlimit",
                 "parser-grammar": "<number [0,inf]>",
@@ -8200,7 +8200,7 @@
             "initial": "1",
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_svgStyle", "strokeData"],
+                "render-style-storage-path": ["m_svgData", "strokeData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Opacity",
                 "parser-grammar": "<opacity-value>"
@@ -8219,11 +8219,11 @@
                 "animation-wrapper-comment": "FIXME: Why doesn't this use VisitedAffectedStyleTypeWrapper?",
                 "animation-wrapper-requires-override-parameters": ["CSSPropertyID::CSSPropertyStrokeColor", "&RenderStyle::strokeColor", "&RenderStyle::setStrokeColor"],
                 "render-style-has-explicitly-set-policy": "value-only",
-                "render-style-has-explicitly-set-storage-path": ["m_rareInheritedData"],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-has-explicitly-set-storage-path": ["m_inheritedRareData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
-                "render-style-visited-link-storage-path": ["m_rareInheritedData"],
+                "render-style-visited-link-storage-path": ["m_inheritedRareData"],
                 "visited-link-color-support": true,
                 "color-property": true,
                 "parser-grammar": "<color>"
@@ -8240,8 +8240,8 @@
             "initial": "1px",
             "codegen-properties": {
                 "render-style-has-explicitly-set-policy": "value-only",
-                "render-style-has-explicitly-set-storage-path": ["m_rareInheritedData"],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-has-explicitly-set-storage-path": ["m_inheritedRareData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::StrokeWidth",
                 "parser-grammar": "<length-percentage [0,inf]> | <number [0,inf]>"
@@ -8270,7 +8270,7 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::SpeakAs",
                 "parser-grammar": "none | [ [ normal | spell-out ] || digits || [ literal-punctuation | no-punctuation ] ]@(no-single-item-opt)",
@@ -8305,7 +8305,7 @@
             "initial": "8",
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::TabSize",
                 "parser-grammar": "<number [0,inf]> | <length [0,inf]>"
@@ -8383,7 +8383,7 @@
                 "match-parent"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::TextAlignLast",
                 "parser-grammar": "<<values>>"
@@ -8403,7 +8403,7 @@
                 "end"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "inheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "inheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextAnchor",
@@ -8448,7 +8448,7 @@
             ],
             "codegen-properties": {
                 "accepts-quirky-length": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::TextIndent",
                 "parser-grammar": "<length-percentage> && hanging? && each-line?"
@@ -8478,7 +8478,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "cssTextJustifyEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextJustify",
                 "parser-grammar": "<<values>>"
@@ -8514,7 +8514,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::TextShadows",
                 "parser-function": "consumeTextShadow",
@@ -8840,7 +8840,7 @@
                 }
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "nonInheritedFlags"],
+                "render-style-storage-path": ["m_svgData", "nonInheritedFlags"],
                 "render-style-storage-container": "struct",
                 "render-style-storage-kind": "enum",
                 "render-style-type": "VectorEffect",
@@ -8962,7 +8962,7 @@
             "codegen-properties": {
                 "style-extractor-custom": true,
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::Widows",
                 "parser-grammar": "<integer [1,inf]>"
@@ -9075,7 +9075,7 @@
                 "aliases": [
                     "-epub-word-break"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "WordBreak",
                 "parser-grammar": "<<values>>"
@@ -9117,7 +9117,7 @@
             "animation-type": "by computed value",
             "initial": "0px",
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGCoordinateComponent",
                 "parser-grammar": "<length-percentage>"
@@ -9131,7 +9131,7 @@
             "animation-type": "by computed value",
             "initial": "0px",
             "codegen-properties": {
-                "render-style-storage-path": ["m_svgStyle", "layoutData"],
+                "render-style-storage-path": ["m_svgData", "layoutData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::SVGCoordinateComponent",
                 "parser-grammar": "<length-percentage>"
@@ -10196,7 +10196,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "colorFilterEnabled",
-                "render-style-storage-path": ["m_rareInheritedData", "appleColorFilter"],
+                "render-style-storage-path": ["m_inheritedRareData", "appleColorFilter"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::AppleColorFilter",
                 "parser-function": "consumeAppleColorFilter",
@@ -10939,7 +10939,7 @@
                 "aliases": [
                     "-webkit-hyphenate-character"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::HyphenateCharacter",
                 "parser-grammar": "auto | <string>"
@@ -10958,7 +10958,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::HyphenateLimitEdge",
                 "parser-grammar": "auto | <number [0,inf]>"
@@ -10974,7 +10974,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::HyphenateLimitEdge",
                 "parser-grammar": "auto | <number [0,inf]>"
@@ -10990,7 +10990,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::HyphenateLimitLines",
                 "parser-grammar": "no-limit | <number [0,inf]>"
@@ -11017,7 +11017,7 @@
                     "-epub-hyphens",
                     "-webkit-hyphens"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Hyphens",
                 "parser-grammar": "<<values>>"
@@ -11065,7 +11065,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-custom": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::WebkitLineBoxContain",
                 "parser-grammar": "none | [ block || inline || font || glyphs || replaced || inline-box || initial-letter ]"
@@ -11084,7 +11084,7 @@
                 "edges"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "LineAlign",
                 "parser-grammar": "<<values>>"
@@ -11118,7 +11118,7 @@
                 "aliases": [
                     "-webkit-line-break"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "LineBreak",
                 "parser-grammar": "<<values>>"
@@ -11168,7 +11168,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::WebkitLineGrid",
                 "parser-grammar": "none | <custom-ident>"
@@ -11191,7 +11191,7 @@
                 "contain"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "LineSnap",
                 "parser-grammar": "<<values>>"
@@ -11395,7 +11395,7 @@
             "codegen-properties": {
                 "render-style-initial": "initialNBSPMode",
                 "render-style-setter": "setNBSPMode",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "NBSPMode",
                 "parser-grammar": "<<values>>"
@@ -11419,7 +11419,7 @@
                 "enable-if": "ENABLE_DARK_MODE_CSS",
                 "render-style-has-explicitly-set-policy": "value-only",
                 "render-style-has-explicitly-set-storage-path": ["m_nonInheritedData", "miscData"],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::ColorScheme",
                 "top-priority": true,
@@ -11624,7 +11624,7 @@
             ],
             "codegen-properties": {
                 "render-style-name-for-methods": "TextCombine",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextCombine",
                 "parser-grammar": "<<values>>"
@@ -11762,7 +11762,7 @@
                 "all"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextDecorationSkipInk",
                 "parser-grammar": "<<values>>"
@@ -11787,7 +11787,7 @@
                 "aliases": [
                     "-webkit-text-underline-position"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::TextUnderlinePosition",
                 "parser-grammar": "auto | [ [ under | from-font ] || [ left | right ] ]@(no-single-item-opt)"
@@ -11802,7 +11802,7 @@
             "inherited": true,
             "initial": "auto",
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::TextUnderlineOffset",
                 "parser-grammar": "auto | <length-percentage>"
@@ -11889,10 +11889,10 @@
                 ],
                 "visited-link-color-support": true,
                 "color-property": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
-                "render-style-visited-link-storage-path": ["m_rareInheritedData"],
+                "render-style-visited-link-storage-path": ["m_inheritedRareData"],
                 "parser-grammar": "<color>"
             },
             "specification": {
@@ -11909,7 +11909,7 @@
                     "-webkit-text-emphasis-position"
                 ],
                 "render-style-initial-custom": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "raw",
                 "render-style-type": "Style::TextEmphasisPosition",
                 "parser-grammar": "[ [ over | under ] && [ right | left ]? ]@(no-single-item-opt)"
@@ -11928,7 +11928,7 @@
                     "-epub-text-emphasis-style",
                     "-webkit-text-emphasis-style"
                 ],
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::TextEmphasisStyle",
                 "parser-grammar": "none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>"
@@ -11945,10 +11945,10 @@
             "codegen-properties": {
                 "visited-link-color-support": true,
                 "color-property": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
-                "render-style-visited-link-storage-path": ["m_rareInheritedData"],
+                "render-style-visited-link-storage-path": ["m_inheritedRareData"],
                 "parser-grammar": "<color>"
             },
             "status": {
@@ -11967,7 +11967,7 @@
                 "none"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "TextSecurity",
                 "parser-grammar": "<<values>>"
@@ -11996,10 +11996,10 @@
             "codegen-properties": {
                 "visited-link-color-support": true,
                 "color-property": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
-                "render-style-visited-link-storage-path": ["m_rareInheritedData"],
+                "render-style-visited-link-storage-path": ["m_inheritedRareData"],
                 "parser-grammar": "<color>"
             },
             "status": {
@@ -12018,7 +12018,7 @@
             ],
             "codegen-properties": {
                 "render-style-initial-constexpr": true,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "value",
                 "render-style-type": "Style::WebkitTextStrokeWidth",
                 "parser-grammar": "<line-width>"
@@ -12269,7 +12269,7 @@
                 "read-write-plaintext-only"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "UserModify",
                 "parser-grammar": "<<values>>"
@@ -12293,7 +12293,7 @@
                 "all"
             ],
             "codegen-properties": {
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "UserSelect",
                 "parser-grammar": "<<values>>"
@@ -12889,7 +12889,7 @@
             ],
             "codegen-properties": {
                 "settings-flag": "cssScrollbarColorEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::ScrollbarColor",
                 "parser-function": "consumeScrollbarColor",
@@ -13307,7 +13307,7 @@
                 "color-property": true,
                 "render-style-initial-custom": true,
                 "render-style-initial-inline": false,
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "reference",
                 "render-style-type": "Style::Color",
                 "render-style-resolving-current-color-exported": true,
@@ -13326,7 +13326,7 @@
             "codegen-properties": {
                 "enable-if": "ENABLE_WEBKIT_OVERFLOW_SCROLLING_CSS_PROPERTY",
                 "settings-flag": "legacyOverflowScrollingTouchEnabled",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::WebkitOverflowScrolling",
                 "parser-grammar": "<<values>>"
@@ -13389,7 +13389,7 @@
             ],
             "codegen-properties": {
                 "enable-if": "ENABLE_WEBKIT_TOUCH_CALLOUT_CSS_PROPERTY",
-                "render-style-storage-path": ["m_rareInheritedData"],
+                "render-style-storage-path": ["m_inheritedRareData"],
                 "render-style-storage-kind": "enum",
                 "render-style-type": "Style::WebkitTouchCallout",
                 "parser-grammar": "<<values>>"

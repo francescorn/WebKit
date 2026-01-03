@@ -203,6 +203,7 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/style"
     "${WEBCORE_DIR}/style/calc"
     "${WEBCORE_DIR}/style/computed"
+    "${WEBCORE_DIR}/style/computed/data"
     "${WEBCORE_DIR}/style/values"
     "${WEBCORE_DIR}/style/values/align"
     "${WEBCORE_DIR}/style/values/anchor-position"

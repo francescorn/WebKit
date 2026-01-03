@@ -30,7 +30,6 @@
 #include "RenderLayerScrollableArea.h"
 #include "RenderStyle+SettersInlines.h"
 #include "ShadowRoot.h"
-#include "StyleInheritedData.h"
 #include "TextControlInnerElements.h"
 #include <wtf/TZoneMallocInlines.h>
 

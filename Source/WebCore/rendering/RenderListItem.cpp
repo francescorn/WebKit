@@ -39,7 +39,6 @@
 #include "RenderStyle+SettersInlines.h"
 #include "RenderTreeBuilder.h"
 #include "RenderView.h"
-#include "StyleInheritedData.h"
 #include "UnicodeBidi.h"
 #include <wtf/StackStats.h>
 #include <wtf/StdLibExtras.h>

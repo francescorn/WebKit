@@ -27,17 +27,14 @@
 #include "config.h"
 #include "BorderData.h"
 
-#include "RenderStyle.h"
-#include "RenderStyleDifference.h"
+#include "StyleComputedStyle+DifferenceLogging.h"
 #include "StylePrimitiveKeyword+Logging.h"
 #include "StylePrimitiveNumericTypes+Logging.h"
-#include <wtf/PointerComparison.h>
-#include <wtf/text/TextStream.h>
 
 namespace WebCore {
 
 BorderData::BorderData()
-    : borderImage { StyleBorderImageData::create() }
+    : borderImage { Style::BorderImageData::create() }
 {
 }
 

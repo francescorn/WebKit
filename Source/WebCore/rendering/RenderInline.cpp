@@ -54,7 +54,6 @@
 #include "RenderTreeBuilder.h"
 #include "RenderView.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 #include "TransformState.h"
 #include "VisiblePosition.h"
 #include <wtf/SetForScope.h>

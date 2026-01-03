@@ -36,7 +36,6 @@
 #include "MutationRecord.h"
 #include "ProcessingInstruction.h"
 #include "RenderText.h"
-#include "StyleInheritedData.h"
 #include <wtf/Ref.h>
 #include <wtf/TZoneMallocInlines.h>
 #include <wtf/text/MakeString.h>

@@ -29,7 +29,6 @@
 #include <WebCore/BoxExtents.h>
 #include <WebCore/PseudoElementIdentifier.h>
 #include <WebCore/StyleGridAutoFlow.h>
-#include <WebCore/StyleGridAutoFlow.h>
 #include <WebCore/StylePrimitiveNumeric+Forward.h>
 #include <WebCore/WritingMode.h>
 #include <unicode/utypes.h>
@@ -61,11 +60,7 @@ class RenderElement;
 class RenderStyle;
 class RenderStyleBase;
 class RenderStyleProperties;
-class SVGRenderStyle;
 class ScrollTimeline;
-class StyleInheritedData;
-class StyleNonInheritedData;
-class StyleRareInheritedData;
 class TransformationMatrix;
 class ViewTimeline;
 
@@ -215,6 +210,11 @@ class ChangedAnimatablePropertiesFunctions;
 class CustomProperty;
 class CustomPropertyData;
 class CustomPropertyRegistry;
+class DifferenceFunctions;
+class InheritedData;
+class NonInheritedData;
+class InheritedRareData;
+class SVGData;
 
 struct AccentColor;
 struct AlignContent;
@@ -818,17 +818,9 @@ public:
         // Total = 56 bits (fits in 8 bytes)
     };
 
-    const StyleNonInheritedData& nonInheritedData() const { return m_nonInheritedData; }
-    const NonInheritedFlags& nonInheritedFlags() const { return m_nonInheritedFlags; }
-
-    const StyleRareInheritedData& rareInheritedData() const { return m_rareInheritedData; }
-    const StyleInheritedData& inheritedData() const { return m_inheritedData; }
-    const InheritedFlags& inheritedFlags() const { return m_inheritedFlags; }
-
-    const SVGRenderStyle& svgStyle() const { return m_svgStyle; }
-
 protected:
     friend class ChangedAnimatablePropertiesFunctions;
+    friend class DifferenceFunctions;
     friend class WebCore::RenderStyle;
     friend class WebCore::RenderStyleBase;
     friend class WebCore::RenderStyleProperties;
@@ -841,19 +833,29 @@ protected:
 
     ComputedStyleBase(ComputedStyleBase&, ComputedStyleBase&&);
 
-    // non-inherited attributes
-    DataRef<StyleNonInheritedData> m_nonInheritedData;
+    const NonInheritedFlags& nonInheritedFlags() const { return m_nonInheritedFlags; }
+    const NonInheritedData& nonInheritedData() const { return m_nonInheritedData; }
+
+    const InheritedFlags& inheritedFlags() const { return m_inheritedFlags; }
+    const InheritedData& inheritedData() const { return m_inheritedData; }
+    const InheritedRareData& inheritedRareData() const { return m_inheritedRareData; }
+
+    const SVGData& svgData() const { return m_svgData; }
+
+    // Non-inherited data
+    DataRef<NonInheritedData> m_nonInheritedData;
     NonInheritedFlags m_nonInheritedFlags;
 
-    // inherited attributes
-    DataRef<StyleRareInheritedData> m_rareInheritedData;
-    DataRef<StyleInheritedData> m_inheritedData;
+    // Inherited data
+    DataRef<InheritedRareData> m_inheritedRareData;
+    DataRef<InheritedData> m_inheritedData;
     InheritedFlags m_inheritedFlags;
 
-    // list of associated pseudo styles
-    std::unique_ptr<PseudoStyleCache> m_cachedPseudoStyles;
+    // Non-inherited and inherited data specialized to SVG
+    DataRef<SVGData> m_svgData;
 
-    DataRef<SVGRenderStyle> m_svgStyle;
+    // Associated pseudo styles
+    std::unique_ptr<PseudoStyleCache> m_cachedPseudoStyles;
 
 #if ASSERT_ENABLED || ENABLE(SECURITY_ASSERTIONS)
     bool m_deletionHasBegun { false };

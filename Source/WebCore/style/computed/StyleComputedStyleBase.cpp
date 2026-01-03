@@ -27,44 +27,18 @@
 #include "StyleComputedStyleBase+SettersInlines.h"
 
 #include "AutosizeStatus.h"
-#include "CSSCustomPropertyValue.h"
-#include "CSSPropertyNames.h"
-#include "CSSPropertyParser.h"
-#include "CSSValuePool.h"
-#include "ColorBlending.h"
-#include "FloatRoundedRect.h"
 #include "FontCascade.h"
 #include "FontSelector.h"
-#include "InlineIteratorTextBox.h"
-#include "InlineTextBoxStyle.h"
 #include "Logging.h"
-#include "MotionPath.h"
-#include "Pagination.h"
-#include "PathTraversalState.h"
-#include "RenderBlock.h"
-#include "RenderElement.h"
-#include "RenderStyleDifference.h"
-#include "RenderTheme.h"
-#include "SVGRenderStyle.h"
-#include "ScaleTransformOperation.h"
-#include "ScrollAxis.h"
-#include "StyleCustomPropertyRegistry.h"
-#include "StyleExtractor.h"
-#include "StyleImage.h"
-#include "StyleInheritedData.h"
+#include "RenderStyle.h"
+#include "StyleComputedStyle+DifferenceLogging.h"
+#include "StyleCustomProperty.h"
 #include "StylePrimitiveKeyword+Logging.h"
 #include "StylePrimitiveNumericTypes+Evaluation.h"
-#include "StyleResolver.h"
-#include "StyleScaleTransformFunction.h"
-#include "StyleSelfAlignmentData.h"
 #include "StyleTextDecorationLine.h"
 #include "StyleTextTransform.h"
-#include "StyleTreeResolver.h"
-#include "StyleWebKitLocale.h"
-#include "TransformOperationData.h"
 #include <algorithm>
 #include <wtf/MathExtras.h>
-#include <wtf/PointerComparison.h>
 #include <wtf/StdLibExtras.h>
 #include <wtf/text/TextStream.h>
 
@@ -167,8 +141,8 @@ void ComputedStyleBase::setCustomPropertyValue(Ref<const CustomProperty>&& value
 {
     auto& name = value->name();
     if (isInherited) {
-        if (auto* existingValue = m_rareInheritedData->customProperties->get(name); !existingValue || *existingValue != value.get())
-            m_rareInheritedData.access().customProperties.access().set(name, WTF::move(value));
+        if (auto* existingValue = m_inheritedRareData->customProperties->get(name); !existingValue || *existingValue != value.get())
+            m_inheritedRareData.access().customProperties.access().set(name, WTF::move(value));
     } else {
         if (auto* existingValue = m_nonInheritedData->rareData->customProperties->get(name); !existingValue || *existingValue != value.get())
             m_nonInheritedData.access().rareData.access().customProperties.access().set(name, WTF::move(value));
@@ -192,7 +166,7 @@ bool ComputedStyleBase::customPropertyValueEqual(const ComputedStyleBase& other,
 bool ComputedStyleBase::customPropertiesEqual(const ComputedStyleBase& other) const
 {
     return m_nonInheritedData->rareData->customProperties == other.m_nonInheritedData->rareData->customProperties
-        && m_rareInheritedData->customProperties == other.m_rareInheritedData->customProperties;
+        && m_inheritedRareData->customProperties == other.m_inheritedRareData->customProperties;
 }
 
 void ComputedStyleBase::deduplicateCustomProperties(const ComputedStyleBase& other)
@@ -205,7 +179,7 @@ void ComputedStyleBase::deduplicateCustomProperties(const ComputedStyleBase& oth
         properties = otherProperties;
     };
 
-    deduplicate(m_rareInheritedData, other.m_rareInheritedData);
+    deduplicate(m_inheritedRareData, other.m_inheritedRareData);
     deduplicate(m_nonInheritedData->rareData, other.m_nonInheritedData->rareData);
 }
 

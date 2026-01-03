@@ -28,6 +28,7 @@
 
 #if USE(CORE_IMAGE)
 
+#import "Filter.h"
 #import "FilterImage.h"
 #import "IOSurface.h"
 #import "ImageBuffer.h"

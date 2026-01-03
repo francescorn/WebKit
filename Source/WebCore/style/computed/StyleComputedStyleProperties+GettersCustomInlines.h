@@ -34,7 +34,6 @@
 #include <WebCore/GraphicsTypes.h>
 #include <WebCore/HitTestRequest.h>
 #include <WebCore/PositionTryOrder.h>
-#include <WebCore/SVGRenderStyle.h>
 #include <WebCore/ScrollTypes.h>
 #include <WebCore/StyleAppearance.h>
 #include <WebCore/StyleAppleColorFilterData.h>
@@ -42,6 +41,7 @@
 #include <WebCore/StyleBackgroundData.h>
 #include <WebCore/StyleBoxData.h>
 #include <WebCore/StyleColorResolver.h>
+#include <WebCore/StyleCustomPropertyData.h>
 #include <WebCore/StyleDeprecatedFlexibleBoxData.h>
 #include <WebCore/StyleFillLayers.h>
 #include <WebCore/StyleFilterData.h>
@@ -63,12 +63,19 @@
 #include <WebCore/StyleGridItemData.h>
 #include <WebCore/StyleGridTrackSizingDirection.h>
 #include <WebCore/StyleInheritedData.h>
+#include <WebCore/StyleInheritedRareData.h>
 #include <WebCore/StyleMarqueeData.h>
-#include <WebCore/StyleMiscNonInheritedData.h>
-#include <WebCore/StyleMultiColData.h>
+#include <WebCore/StyleMultiColumnData.h>
 #include <WebCore/StyleNonInheritedData.h>
-#include <WebCore/StyleRareInheritedData.h>
-#include <WebCore/StyleRareNonInheritedData.h>
+#include <WebCore/StyleNonInheritedMiscData.h>
+#include <WebCore/StyleNonInheritedRareData.h>
+#include <WebCore/StyleSVGData.h>
+#include <WebCore/StyleSVGFillData.h>
+#include <WebCore/StyleSVGLayoutData.h>
+#include <WebCore/StyleSVGMarkerResourceData.h>
+#include <WebCore/StyleSVGNonInheritedMiscData.h>
+#include <WebCore/StyleSVGStopData.h>
+#include <WebCore/StyleSVGStrokeData.h>
 #include <WebCore/StyleSurroundData.h>
 #include <WebCore/StyleTextAlign.h>
 #include <WebCore/StyleTextAutospace.h>
@@ -97,7 +104,7 @@ namespace Style {
 
 inline Cursor ComputedStyleProperties::cursor() const
 {
-    return { m_rareInheritedData->cursorImages, static_cast<CursorType>(m_inheritedFlags.cursorType) };
+    return { m_inheritedRareData->cursorImages, static_cast<CursorType>(m_inheritedFlags.cursorType) };
 }
 
 inline ZIndex ComputedStyleProperties::specifiedZIndex() const

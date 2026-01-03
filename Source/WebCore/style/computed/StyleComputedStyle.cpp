@@ -25,45 +25,14 @@
 #include "StyleComputedStyle.h"
 #include "StyleComputedStyle+SettersInlines.h"
 
-#include "AutosizeStatus.h"
-#include "CSSCustomPropertyValue.h"
-#include "CSSPropertyNames.h"
-#include "CSSPropertyParser.h"
-#include "CSSValuePool.h"
-#include "ColorBlending.h"
-#include "FloatRoundedRect.h"
 #include "FontCascade.h"
-#include "FontSelector.h"
-#include "InlineIteratorTextBox.h"
-#include "InlineTextBoxStyle.h"
-#include "Logging.h"
-#include "MotionPath.h"
 #include "Pagination.h"
-#include "PathTraversalState.h"
-#include "RenderBlock.h"
-#include "RenderElement.h"
-#include "RenderTheme.h"
-#include "SVGRenderStyle.h"
-#include "ScaleTransformOperation.h"
-#include "ScrollAxis.h"
 #include "StyleComputedStyleBase+ConstructionInlines.h"
 #include "StyleCustomPropertyRegistry.h"
-#include "StyleExtractor.h"
-#include "StyleImage.h"
-#include "StyleInheritedData.h"
 #include "StylePrimitiveNumericTypes+Evaluation.h"
-#include "StyleResolver.h"
 #include "StyleScaleTransformFunction.h"
-#include "StyleSelfAlignmentData.h"
-#include "StyleTextDecorationLine.h"
-#include "StyleTextTransform.h"
-#include "StyleTreeResolver.h"
-#include "TransformOperationData.h"
-#include <algorithm>
 #include <wtf/MathExtras.h>
-#include <wtf/PointerComparison.h>
 #include <wtf/StdLibExtras.h>
-#include <wtf/text/TextStream.h>
 
 #if ENABLE(TEXT_AUTOSIZING)
 #include <wtf/text/StringHash.h>
@@ -101,20 +70,20 @@ static_assert(sizeof(ComputedStyle) == sizeof(SameSizeAsComputedStyle), "Compute
 
 void ComputedStyle::inheritFrom(const ComputedStyle& inheritParent)
 {
-    m_rareInheritedData = inheritParent.m_rareInheritedData;
+    m_inheritedRareData = inheritParent.m_inheritedRareData;
     m_inheritedData = inheritParent.m_inheritedData;
     m_inheritedFlags = inheritParent.m_inheritedFlags;
 
-    if (m_svgStyle != inheritParent.m_svgStyle)
-        m_svgStyle.access().inheritFrom(inheritParent.m_svgStyle.get());
+    if (m_svgData != inheritParent.m_svgData)
+        m_svgData.access().inheritFrom(inheritParent.m_svgData.get());
 }
 
 void ComputedStyle::inheritIgnoringCustomPropertiesFrom(const ComputedStyle& inheritParent)
 {
-    auto oldCustomProperties = m_rareInheritedData->customProperties;
+    auto oldCustomProperties = m_inheritedRareData->customProperties;
     inheritFrom(inheritParent);
-    if (oldCustomProperties != m_rareInheritedData->customProperties)
-        m_rareInheritedData.access().customProperties = oldCustomProperties;
+    if (oldCustomProperties != m_inheritedRareData->customProperties)
+        m_inheritedRareData.access().customProperties = oldCustomProperties;
 }
 
 void ComputedStyle::inheritUnicodeBidiFrom(const ComputedStyle& inheritParent)
@@ -144,8 +113,8 @@ void ComputedStyle::copyNonInheritedFrom(const ComputedStyle& other)
     m_nonInheritedData = other.m_nonInheritedData;
     m_nonInheritedFlags.copyNonInheritedFrom(other.m_nonInheritedFlags);
 
-    if (m_svgStyle != other.m_svgStyle)
-        m_svgStyle.access().copyNonInheritedFrom(other.m_svgStyle.get());
+    if (m_svgData != other.m_svgData)
+        m_svgData.access().copyNonInheritedFrom(other.m_svgData.get());
 
     ASSERT(zoom() == initialZoom());
 }
@@ -168,24 +137,24 @@ bool ComputedStyle::operator==(const ComputedStyle& other) const
     return m_inheritedFlags == other.m_inheritedFlags
         && m_nonInheritedFlags == other.m_nonInheritedFlags
         && m_nonInheritedData == other.m_nonInheritedData
-        && m_rareInheritedData == other.m_rareInheritedData
+        && m_inheritedRareData == other.m_inheritedRareData
         && m_inheritedData == other.m_inheritedData
-        && m_svgStyle == other.m_svgStyle;
+        && m_svgData == other.m_svgData;
 }
 
 bool ComputedStyle::inheritedEqual(const ComputedStyle& other) const
 {
     return m_inheritedFlags == other.m_inheritedFlags
         && m_inheritedData == other.m_inheritedData
-        && (m_svgStyle.ptr() == other.m_svgStyle.ptr() || m_svgStyle->inheritedEqual(other.m_svgStyle))
-        && m_rareInheritedData == other.m_rareInheritedData;
+        && (m_svgData.ptr() == other.m_svgData.ptr() || m_svgData->inheritedEqual(other.m_svgData))
+        && m_inheritedRareData == other.m_inheritedRareData;
 }
 
 bool ComputedStyle::nonInheritedEqual(const ComputedStyle& other) const
 {
     return m_nonInheritedFlags == other.m_nonInheritedFlags
         && m_nonInheritedData == other.m_nonInheritedData
-        && (m_svgStyle.ptr() == other.m_svgStyle.ptr() || m_svgStyle->nonInheritedEqual(other.m_svgStyle));
+        && (m_svgData.ptr() == other.m_svgData.ptr() || m_svgData->nonInheritedEqual(other.m_svgData));
 }
 
 bool ComputedStyle::fastPathInheritedEqual(const ComputedStyle& other) const
@@ -210,9 +179,9 @@ bool ComputedStyle::nonFastPathInheritedEqual(const ComputedStyle& other) const
         return false;
     if (m_inheritedData.ptr() != other.m_inheritedData.ptr() && !m_inheritedData->nonFastPathInheritedEqual(*other.m_inheritedData))
         return false;
-    if (m_rareInheritedData != other.m_rareInheritedData)
+    if (m_inheritedRareData != other.m_inheritedRareData)
         return false;
-    if (m_svgStyle.ptr() != other.m_svgStyle.ptr() && !m_svgStyle->inheritedEqual(other.m_svgStyle))
+    if (m_svgData.ptr() != other.m_svgData.ptr() && !m_svgData->inheritedEqual(other.m_svgData))
         return false;
     return true;
 }
@@ -255,9 +224,9 @@ unsigned ComputedStyle::hashForTextAutosizing() const
     // FIXME: Not a very smart hash. Could be improved upon. See <https://bugs.webkit.org/show_bug.cgi?id=121131>.
     unsigned hash = m_nonInheritedData->miscData->usedAppearance;
     hash ^= m_nonInheritedData->rareData->lineClamp.valueForHash();
-    hash ^= m_rareInheritedData->overflowWrap;
-    hash ^= m_rareInheritedData->nbspMode;
-    hash ^= m_rareInheritedData->lineBreak;
+    hash ^= m_inheritedRareData->overflowWrap;
+    hash ^= m_inheritedRareData->nbspMode;
+    hash ^= m_inheritedRareData->lineBreak;
     hash ^= m_inheritedData->specifiedLineHeight.valueForHash();
     hash ^= computeFontHash(m_inheritedData->fontData->fontCascade);
     hash ^= WTF::FloatHash<float>::hash(m_inheritedData->borderHorizontalSpacing.unresolvedValue());
@@ -267,7 +236,7 @@ unsigned ComputedStyle::hashForTextAutosizing() const
     hash ^= m_nonInheritedFlags.position;
     hash ^= m_nonInheritedFlags.floating;
     hash ^= m_nonInheritedData->miscData->textOverflow;
-    hash ^= m_rareInheritedData->textSecurity;
+    hash ^= m_inheritedRareData->textSecurity;
     return hash;
 }
 
@@ -275,11 +244,11 @@ bool ComputedStyle::equalForTextAutosizing(const ComputedStyle& other) const
 {
     return m_nonInheritedData->miscData->usedAppearance == other.m_nonInheritedData->miscData->usedAppearance
         && m_nonInheritedData->rareData->lineClamp == other.m_nonInheritedData->rareData->lineClamp
-        && m_rareInheritedData->textSizeAdjust == other.m_rareInheritedData->textSizeAdjust
-        && m_rareInheritedData->overflowWrap == other.m_rareInheritedData->overflowWrap
-        && m_rareInheritedData->nbspMode == other.m_rareInheritedData->nbspMode
-        && m_rareInheritedData->lineBreak == other.m_rareInheritedData->lineBreak
-        && m_rareInheritedData->textSecurity == other.m_rareInheritedData->textSecurity
+        && m_inheritedRareData->textSizeAdjust == other.m_inheritedRareData->textSizeAdjust
+        && m_inheritedRareData->overflowWrap == other.m_inheritedRareData->overflowWrap
+        && m_inheritedRareData->nbspMode == other.m_inheritedRareData->nbspMode
+        && m_inheritedRareData->lineBreak == other.m_inheritedRareData->lineBreak
+        && m_inheritedRareData->textSecurity == other.m_inheritedRareData->textSecurity
         && m_inheritedData->specifiedLineHeight == other.m_inheritedData->specifiedLineHeight
         && m_inheritedData->fontData->fontCascade.equalForTextAutoSizing(other.m_inheritedData->fontData->fontCascade)
         && m_inheritedData->borderHorizontalSpacing == other.m_inheritedData->borderHorizontalSpacing

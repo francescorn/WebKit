@@ -36,10 +36,10 @@ inline ComputedStyleBase::ComputedStyleBase(ComputedStyleBase&&) = default;
 inline ComputedStyleBase& ComputedStyleBase::operator=(ComputedStyleBase&&) = default;
 
 inline ComputedStyleBase::ComputedStyleBase(CreateDefaultStyleTag)
-    : m_nonInheritedData(StyleNonInheritedData::create())
-    , m_rareInheritedData(StyleRareInheritedData::create())
-    , m_inheritedData(StyleInheritedData::create())
-    , m_svgStyle(SVGRenderStyle::create())
+    : m_nonInheritedData(NonInheritedData::create())
+    , m_inheritedRareData(InheritedRareData::create())
+    , m_inheritedData(InheritedData::create())
+    , m_svgData(SVGData::create())
 {
     m_inheritedFlags.writingMode = WritingMode(ComputedStyle::initialWritingMode(), ComputedStyle::initialDirection(), ComputedStyle::initialTextOrientation()).toData();
     m_inheritedFlags.emptyCells = static_cast<unsigned>(ComputedStyle::initialEmptyCells());
@@ -94,21 +94,21 @@ inline ComputedStyleBase::ComputedStyleBase(CreateDefaultStyleTag)
 inline ComputedStyleBase::ComputedStyleBase(const ComputedStyleBase& other, CloneTag)
     : m_nonInheritedData(other.m_nonInheritedData)
     , m_nonInheritedFlags(other.m_nonInheritedFlags)
-    , m_rareInheritedData(other.m_rareInheritedData)
+    , m_inheritedRareData(other.m_inheritedRareData)
     , m_inheritedData(other.m_inheritedData)
     , m_inheritedFlags(other.m_inheritedFlags)
-    , m_svgStyle(other.m_svgStyle)
+    , m_svgData(other.m_svgData)
 {
 }
 
 inline ComputedStyleBase::ComputedStyleBase(ComputedStyleBase& a, ComputedStyleBase&& b)
     : m_nonInheritedData(a.m_nonInheritedData.replace(WTF::move(b.m_nonInheritedData)))
     , m_nonInheritedFlags(std::exchange(a.m_nonInheritedFlags, b.m_nonInheritedFlags))
-    , m_rareInheritedData(a.m_rareInheritedData.replace(WTF::move(b.m_rareInheritedData)))
+    , m_inheritedRareData(a.m_inheritedRareData.replace(WTF::move(b.m_inheritedRareData)))
     , m_inheritedData(a.m_inheritedData.replace(WTF::move(b.m_inheritedData)))
     , m_inheritedFlags(std::exchange(a.m_inheritedFlags, b.m_inheritedFlags))
+    , m_svgData(a.m_svgData.replace(WTF::move(b.m_svgData)))
     , m_cachedPseudoStyles(std::exchange(a.m_cachedPseudoStyles, WTF::move(b.m_cachedPseudoStyles)))
-    , m_svgStyle(a.m_svgStyle.replace(WTF::move(b.m_svgStyle)))
 {
 }
 

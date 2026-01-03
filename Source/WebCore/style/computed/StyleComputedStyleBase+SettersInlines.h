@@ -110,17 +110,17 @@ inline void ComputedStyleBase::setDisallowsFastPathInheritance()
 
 inline void ComputedStyleBase::setEffectiveInert(bool effectiveInert)
 {
-    SET(m_rareInheritedData, effectiveInert, effectiveInert);
+    SET(m_inheritedRareData, effectiveInert, effectiveInert);
 }
 
 inline void ComputedStyleBase::setIsEffectivelyTransparent(bool effectivelyTransparent)
 {
-    SET(m_rareInheritedData, effectivelyTransparent, effectivelyTransparent);
+    SET(m_inheritedRareData, effectivelyTransparent, effectivelyTransparent);
 }
 
 inline void ComputedStyleBase::setEventListenerRegionTypes(OptionSet<EventListenerRegionType> eventListenerTypes)
 {
-    SET(m_rareInheritedData, eventListenerRegionTypes, eventListenerTypes);
+    SET(m_inheritedRareData, eventListenerRegionTypes, eventListenerTypes);
 }
 
 inline void ComputedStyleBase::setHasAttrContent()
@@ -160,22 +160,22 @@ inline void ComputedStyleBase::setNativeAppearanceDisabled(bool value)
 
 inline void ComputedStyleBase::setIsForceHidden()
 {
-    SET(m_rareInheritedData, isForceHidden, true);
+    SET(m_inheritedRareData, isForceHidden, true);
 }
 
 inline void ComputedStyleBase::setAutoRevealsWhenFound()
 {
-    SET(m_rareInheritedData, autoRevealsWhenFound, true);
+    SET(m_inheritedRareData, autoRevealsWhenFound, true);
 }
 
 inline void ComputedStyleBase::setInsideDefaultButton(bool value)
 {
-    SET(m_rareInheritedData, insideDefaultButton, value);
+    SET(m_inheritedRareData, insideDefaultButton, value);
 }
 
 inline void ComputedStyleBase::setInsideSubmitButton(bool value)
 {
-    SET(m_rareInheritedData, insideSubmitButton, value);
+    SET(m_inheritedRareData, insideSubmitButton, value);
 }
 
 inline void ComputedStyleBase::setUsedPositionOptionIndex(std::optional<size_t> index)
@@ -195,12 +195,12 @@ inline void ComputedStyleBase::setUsedAppearance(StyleAppearance a)
 
 inline void ComputedStyleBase::setUsedContentVisibility(ContentVisibility usedContentVisibility)
 {
-    SET(m_rareInheritedData, usedContentVisibility, static_cast<unsigned>(usedContentVisibility));
+    SET(m_inheritedRareData, usedContentVisibility, static_cast<unsigned>(usedContentVisibility));
 }
 
 inline void ComputedStyleBase::setUsedTouchAction(TouchAction touchAction)
 {
-    SET(m_rareInheritedData, usedTouchAction, touchAction);
+    SET(m_inheritedRareData, usedTouchAction, touchAction);
 }
 
 inline void ComputedStyleBase::setUsedZIndex(ZIndex index)
@@ -212,7 +212,7 @@ inline void ComputedStyleBase::setUsedZIndex(ZIndex index)
 
 inline void ComputedStyleBase::setUsedAppleVisualEffectForSubtree(AppleVisualEffect effect)
 {
-    SET(m_rareInheritedData, usedAppleVisualEffectForSubtree, static_cast<unsigned>(effect));
+    SET(m_inheritedRareData, usedAppleVisualEffectForSubtree, static_cast<unsigned>(effect));
 }
 
 #endif
@@ -239,12 +239,12 @@ inline void ComputedStyleBase::setPseudoElementIdentifier(std::optional<PseudoEl
 
 inline void ComputedStyleBase::setEvaluationTimeZoomEnabled(bool value)
 {
-    SET(m_rareInheritedData, evaluationTimeZoomEnabled, value);
+    SET(m_inheritedRareData, evaluationTimeZoomEnabled, value);
 }
 
 inline void ComputedStyleBase::setDeviceScaleFactor(float value)
 {
-    SET(m_rareInheritedData, deviceScaleFactor, value);
+    SET(m_inheritedRareData, deviceScaleFactor, value);
 }
 
 inline void ComputedStyleBase::setUseSVGZoomRulesForLength(bool value)
@@ -254,9 +254,9 @@ inline void ComputedStyleBase::setUseSVGZoomRulesForLength(bool value)
 
 inline bool ComputedStyleBase::setUsedZoom(float zoomLevel)
 {
-    if (compareEqual(m_rareInheritedData->usedZoom, zoomLevel))
+    if (compareEqual(m_inheritedRareData->usedZoom, zoomLevel))
         return false;
-    m_rareInheritedData.access().usedZoom = zoomLevel;
+    m_inheritedRareData.access().usedZoom = zoomLevel;
     return true;
 }
 

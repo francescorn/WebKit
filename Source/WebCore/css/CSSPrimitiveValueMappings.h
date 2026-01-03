@@ -41,7 +41,6 @@
 #include "FontSizeAdjust.h"
 #include "GraphicsTypes.h"
 #include "RenderStyleConstants.h"
-#include "SVGRenderStyleDefs.h"
 #include "ScrollAxis.h"
 #include "ScrollTypes.h"
 #include "StyleContain.h"

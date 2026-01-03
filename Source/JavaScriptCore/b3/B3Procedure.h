@@ -39,6 +39,7 @@
 #include <wtf/FastMalloc.h>
 #include <wtf/HashSet.h>
 #include <wtf/IndexedContainerIterator.h>
+#include <wtf/JSONValues.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/PrintStream.h>
 #include <wtf/SequesteredMalloc.h>
@@ -303,6 +304,9 @@ public:
         return m_usesSIMD;
     }
 
+    void setIonGraphPasses(Ref<JSON::Array>&&);
+    void appendIonGraphPass(ASCIILiteral);
+
 private:
     friend class BlockInsertionSet;
 
@@ -325,6 +329,7 @@ private:
     RefPtr<SharedTask<void(PrintStream&, Origin)>> m_originPrinter;
     const void* m_frontendData;
     PCToOriginMap m_pcToOriginMap;
+    RefPtr<JSON::Array> m_ionGraphPasses;
     unsigned m_numEntrypoints { 1 };
     unsigned m_optLevel { defaultOptLevel() };
     bool m_needsUsedRegisters { true };

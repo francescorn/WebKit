@@ -34,7 +34,6 @@
 #include "RenderStyle+SettersInlines.h"
 #include "RenderTheme.h"
 #include "RenderTreeBuilder.h"
-#include "StyleInheritedData.h"
 #include <wtf/TZoneMallocInlines.h>
 
 #if PLATFORM(IOS_FAMILY)

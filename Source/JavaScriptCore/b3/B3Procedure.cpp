@@ -37,11 +37,14 @@
 #include "B3DataSection.h"
 #include "B3Dominators.h"
 #include "B3NaturalLoops.h"
+#include "B3OriginDump.h"
 #include "B3ProcedureInlines.h"
 #include "B3ValueInlines.h"
 #include "B3Variable.h"
 #include "JITOpaqueByproducts.h"
+#include <wtf/ListDump.h>
 #include <wtf/TZoneMallocInlines.h>
+#include <wtf/text/MakeString.h>
 
 namespace JSC { namespace B3 {
 
@@ -504,6 +507,129 @@ void Procedure::setNeedsPCToOriginMap()
 { 
     m_needsPCToOriginMap = true;
     m_code->forcePreservationOfB3Origins();
+}
+
+void Procedure::setIonGraphPasses(Ref<JSON::Array>&& array)
+{
+    m_ionGraphPasses = array.get();
+    m_code->setIonGraphPasses(WTF::move(array));
+}
+
+void Procedure::appendIonGraphPass(ASCIILiteral passName)
+{
+    auto pass = JSON::Object::create();
+    pass->setString("name"_s, makeString("B3: "_s, passName));
+    {
+        auto ionGraph = JSON::Object::create();
+        auto ionBlocks = JSON::Array::create();
+        ionGraph->setArray("blocks"_s, ionBlocks);
+
+        Dominators dominators(*this);
+        NaturalLoops naturalLoops(*this, dominators);
+
+        for (auto* block : *this) {
+            if (!block)
+                continue;
+
+            auto ionBlock = JSON::Object::create();
+            auto attributes = JSON::Array::create();
+            auto predecessors = JSON::Array::create();
+            auto successors = JSON::Array::create();
+            auto instructions = JSON::Array::create();
+
+            for (auto* value : *block) {
+                auto instruction = JSON::Object::create();
+                auto inputs = JSON::Array::create();
+
+                for (auto* child : value->children())
+                    inputs->pushInteger(child->index());
+
+                String type;
+                {
+                    StringPrintStream stream;
+                    if (value->type().isTuple())
+                        stream.print(listDump(tupleForType(value->type())));
+                    else
+                        stream.print(value->type());
+                    type = stream.toString();
+                }
+
+                StringPrintStream stream;
+                stream.print(value->kind(), "("_s);
+                CommaPrinter comma;
+                for (auto* child : value->children())
+                    stream.print(comma, child->kind(), "#"_s, child->index());
+                value->dumpMeta(comma, stream);
+                auto effects = value->effects();
+                {
+                    CString string = toCString(effects);
+                    if (string.length())
+                        stream.print(comma, string);
+                }
+                if (auto origin = value->origin())
+                    stream.print(comma, OriginDump(this, origin));
+                stream.print(")"_s);
+
+                if (effects.terminal) {
+                    stream.print(" -> "_s);
+                    value->dumpSuccessors(block, stream);
+                }
+
+                instruction->setInteger("ptr"_s, value->index() + 1);
+                instruction->setInteger("id"_s, value->index());
+                instruction->setString("opcode"_s, stream.toString());
+                instruction->setArray("attributes"_s, JSON::Array::create());
+                instruction->setArray("inputs"_s, WTF::move(inputs));
+                instruction->setArray("uses"_s, JSON::Array::create());
+                instruction->setArray("memInputs"_s, JSON::Array::create());
+                instruction->setString("type"_s, WTF::move(type));
+
+                instructions->pushObject(WTF::move(instruction));
+            }
+
+            unsigned loopDepth = 0;
+            auto computeWithNaturalLoops = [&](auto& naturalLoops, auto& dominators) {
+                auto isBackEdge = [&](auto* block) -> bool {
+                    for (auto successor : block->successors()) {
+                        if (dominators.dominates(successor.block(), block))
+                            return true;
+                    }
+                    return false;
+                };
+
+                loopDepth = naturalLoops.loopDepth(block);
+                if (isBackEdge(block))
+                    attributes->pushString("backedge"_s);
+                if (auto* loop = naturalLoops.headerOf(block))
+                    attributes->pushString("loopheader"_s);
+            };
+
+            computeWithNaturalLoops(naturalLoops, dominators);
+
+            for (auto predecessor : block->predecessors())
+                predecessors->pushInteger(predecessor->index());
+
+            for (auto successor : block->successors())
+                successors->pushInteger(successor.block()->index());
+
+            ionBlock->setInteger("ptr"_s, block->index() + 1);
+            ionBlock->setInteger("id"_s, block->index());
+            ionBlock->setInteger("loopDepth"_s, loopDepth);
+            ionBlock->setArray("attributes"_s, WTF::move(attributes));
+            ionBlock->setArray("predecessors"_s, WTF::move(predecessors));
+            ionBlock->setArray("successors"_s, WTF::move(successors));
+            ionBlock->setArray("instructions"_s, WTF::move(instructions));
+            ionBlocks->pushObject(ionBlock);
+        }
+
+        pass->setObject("mir"_s, WTF::move(ionGraph)); // MIR stands for SpiderMonkey's middle-level IR.
+    }
+    {
+        auto ionGraph = JSON::Object::create();
+        ionGraph->setArray("blocks"_s, JSON::Array::create());
+        pass->setObject("lir"_s, WTF::move(ionGraph)); // LIR stands for SpiderMonkey's low-level IR.
+    }
+    m_ionGraphPasses->pushObject(pass);
 }
 
 } } // namespace JSC::B3

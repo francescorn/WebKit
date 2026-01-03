@@ -36,7 +36,6 @@
 #include "SVGNames.h"
 #include "ScriptDisallowedScope.h"
 #include "ShadowRoot.h"
-#include "StyleInheritedData.h"
 #include "Text.h"
 #include <wtf/TZoneMallocInlines.h>
 

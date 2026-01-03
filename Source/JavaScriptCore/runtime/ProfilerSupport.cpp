@@ -30,11 +30,13 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <wtf/FileHandle.h>
 #include <wtf/FileSystem.h>
 #include <wtf/MonotonicTime.h>
 #include <wtf/ProcessID.h>
 #include <wtf/StringPrintStream.h>
 #include <wtf/TZoneMallocInlines.h>
+#include <wtf/text/MakeString.h>
 
 #if OS(LINUX)
 #include <sys/mman.h>
@@ -186,6 +188,23 @@ void ProfilerSupport::markInterval(const void* identifier, Category, MonotonicTi
         Locker locker { profiler.m_lock };
         profiler.write(locker, start, end, message);
     });
+}
+
+void ProfilerSupport::dumpIonGraphFunction(const String& functionName, Ref<JSON::Object>&& function)
+{
+    if (!Options::dumpIonGraph())
+        return;
+    auto json = JSON::Object::create();
+    auto functions = JSON::Array::create();
+    functions->pushObject(WTF::move(function));
+    json->setInteger("version"_s, 1);
+    json->setArray("functions"_s, WTF::move(functions));
+    auto string = json->toJSONString();
+
+    auto handle = FileSystem::createDumpFile(makeString("iongraph-"_s, functionName, "-"_s, WTF::getCurrentProcessID(), "-"_s, generateTimestamp()), ".json"_s, String::fromUTF8(Options::ionGraphDirectory()));
+    RELEASE_ASSERT(handle);
+    handle.write(WTF::asByteSpan(string.utf8().span()));
+    handle.flush();
 }
 
 } // namespace JSC

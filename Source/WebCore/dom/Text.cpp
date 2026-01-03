@@ -32,7 +32,6 @@
 #include "ScopedEventQueue.h"
 #include "SerializedNode.h"
 #include "ShadowRoot.h"
-#include "StyleInheritedData.h"
 #include "StyleResolver.h"
 #include "StyleUpdate.h"
 #include "TextManipulationController.h"

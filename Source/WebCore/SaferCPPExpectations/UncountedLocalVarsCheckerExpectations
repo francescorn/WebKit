@@ -173,7 +173,6 @@ editing/cocoa/NodeHTMLConverter.mm
 [ iOS ] editing/ios/EditorIOS.mm
 [ Mac ] editing/mac/EditorMac.mm
 [ Mac ] editing/mac/FrameSelectionMac.mm
-history/CachedPage.cpp
 html/CachedHTMLCollectionInlines.h
 html/CollectionTraversalInlines.h
 [ iOS ] html/HTMLAnchorElement.cpp
@@ -182,7 +181,6 @@ html/HTMLFormElement.cpp
 [ iOS ] html/HTMLImageLoader.cpp
 html/HTMLInputElement.cpp
 html/HTMLMediaElement.cpp
-html/HTMLSlotElement.cpp
 html/HTMLTableElement.cpp
 html/ImageBitmap.cpp
 html/LazyLoadFrameObserver.cpp
@@ -368,7 +366,6 @@ rendering/mathml/MathMLStyle.cpp
 rendering/style/StyleCachedImage.cpp
 rendering/style/StyleCanvasImage.cpp
 rendering/style/StyleCursorImage.cpp
-rendering/style/StyleCustomPropertyData.cpp
 rendering/svg/RenderSVGPath.cpp
 rendering/svg/RenderSVGTextPath.cpp
 rendering/svg/SVGLayerTransformComputation.h
@@ -418,6 +415,7 @@ style/UserAgentStyle.cpp
 style/computed/StyleComputedStyleBase+SettersInlines.h
 style/computed/StyleComputedStyleBase.cpp
 style/computed/StyleComputedStyleProperties+SettersCustomInlines.h
+style/computed/data/StyleCustomPropertyData.cpp
 style/values/transforms/StyleTransformFunction.cpp
 svg/SVGAnimateMotionElement.cpp
 svg/SVGClipPathElement.cpp

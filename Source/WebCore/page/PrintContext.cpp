@@ -37,7 +37,6 @@
 #include "RenderStyle+GettersInlines.h"
 #include "RenderView.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 #include "StyleResolver.h"
 #include "StyleScope.h"
 #include <wtf/TZoneMallocInlines.h>

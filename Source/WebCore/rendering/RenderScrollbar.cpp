@@ -36,7 +36,6 @@
 #include "RenderStyle+SettersInlines.h"
 #include "RenderWidget.h"
 #include "ScrollbarInlines.h"
-#include "StyleInheritedData.h"
 #include "StyleResolver.h"
 
 namespace WebCore {

@@ -66,7 +66,6 @@
 #include "RequestPriority.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 #include "StyleResolveForDocument.h"
 #include "StyleScope.h"
 #include "StyleSheetContents.h"

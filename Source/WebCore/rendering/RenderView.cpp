@@ -71,7 +71,6 @@
 #include "SVGImage.h"
 #include "SVGSVGElement.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 #include "StyleScope.h"
 #include "TransformState.h"
 #include <wtf/SetForScope.h>

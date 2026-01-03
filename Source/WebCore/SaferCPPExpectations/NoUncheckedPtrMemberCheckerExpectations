@@ -1,4 +1,3 @@
-Modules/websockets/WorkerThreadableWebSocketChannel.h
 [ iOS ] accessibility/ios/WebAccessibilityObjectWrapperIOS.h
 bindings/js/JSLazyEventListener.cpp
 css/CSSToLengthConversionData.h
@@ -28,7 +27,6 @@ layout/layouttree/LayoutDescendantIterator.h
 layout/layouttree/LayoutIterator.h
 [ iOS ] page/ios/ContentChangeObserver.h
 platform/graphics/TextRunIterator.h
-platform/graphics/ca/TileCoverageMap.h
 [ iOS ] platform/ios/DeviceMotionClientIOS.h
 [ iOS ] platform/ios/DeviceOrientationClientIOS.h
 rendering/BackgroundPainter.h

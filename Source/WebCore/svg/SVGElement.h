@@ -24,7 +24,6 @@
 
 #include "SVGNames.h"
 #include "SVGPropertyOwner.h"
-#include "SVGRenderStyleDefs.h"
 #include "StyledElement.h"
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>

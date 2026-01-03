@@ -31,7 +31,6 @@
 #include "SVGRenderSupport.h"
 #include "SVGResourcesCache.h"
 #include "Settings.h"
-#include "StyleInheritedData.h"
 #include <wtf/TZoneMallocInlines.h>
 
 namespace WebCore {

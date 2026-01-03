@@ -299,22 +299,22 @@ public:
     inline const Style::PageSize& pageSize() const;
     inline void setPageSize(Style::PageSize&&);
 
-    using NonInheritedFlags = Style::ComputedStyle::NonInheritedFlags;
-    using InheritedFlags = Style::ComputedStyle::InheritedFlags;
-
-    const StyleNonInheritedData& nonInheritedData() const { return m_computedStyle.nonInheritedData(); }
-    const NonInheritedFlags& nonInheritedFlags() const { return m_computedStyle.nonInheritedFlags(); }
-
-    const StyleRareInheritedData& rareInheritedData() const { return m_computedStyle.rareInheritedData(); }
-    const StyleInheritedData& inheritedData() const { return m_computedStyle.inheritedData(); }
-    const InheritedFlags& inheritedFlags() const { return m_computedStyle.inheritedFlags(); }
-
-    const SVGRenderStyle& svgStyle() const { return m_computedStyle.svgStyle(); }
+    // MARK: - Underlying ComputedStyle
 
     const Style::ComputedStyle& computedStyle() const { return m_computedStyle; }
 
 protected:
     friend class RenderStyle;
+    friend class Style::DifferenceFunctions;
+
+    const Style::NonInheritedData& nonInheritedData() const { return computedStyle().nonInheritedData(); }
+    const Style::ComputedStyle::NonInheritedFlags& nonInheritedFlags() const { return computedStyle().nonInheritedFlags(); }
+
+    const Style::InheritedRareData& inheritedRareData() const { return computedStyle().inheritedRareData(); }
+    const Style::InheritedData& inheritedData() const { return computedStyle().inheritedData(); }
+    const Style::ComputedStyle::InheritedFlags& inheritedFlags() const { return computedStyle().inheritedFlags(); }
+
+    const Style::SVGData& svgData() const { return computedStyle().svgData(); }
 
     enum CloneTag { Clone };
     enum CreateDefaultStyleTag { CreateDefaultStyle };

@@ -43,6 +43,7 @@
 #include <wtf/BitVector.h>
 #include <wtf/GenericHashKey.h>
 #include <wtf/HashMap.h>
+#include <wtf/JSONValues.h>
 #include <wtf/StackCheck.h>
 #include <wtf/StdLibExtras.h>
 #include <wtf/Vector.h>
@@ -314,13 +315,15 @@ public:
     enum PhiNodeDumpMode { DumpLivePhisOnly, DumpAllPhis };
     void dumpBlockHeader(PrintStream&, const char* prefix, BasicBlock*, PhiNodeDumpMode, DumpContext*);
     void dump(PrintStream&, Edge);
-    void dump(PrintStream&, const char* prefix, Node*, DumpContext* = nullptr);
+    void dump(PrintStream&, const char* prefix, Node*, DumpContext* = nullptr, bool inIonGraph = false);
     static int amountOfNodeWhiteSpace(Node*);
     static void printNodeWhiteSpace(PrintStream&, Node*);
 
     // Dump the code origin of the given node as a diff from the code origin of the
     // preceding node. Returns true if anything was printed.
     bool dumpCodeOrigin(PrintStream&, const char* prefix, Node*& previousNode, Node* currentNode, DumpContext*);
+
+    void appendIonGraphPass(const String& passName);
 
     AddSpeculationMode addSpeculationMode(Node* add, bool leftShouldSpeculateInt32, bool rightShouldSpeculateInt32, PredictionPass pass)
     {
@@ -1248,6 +1251,8 @@ public:
 
     bool afterFixup() { return m_planStage >= PlanStage::AfterFixup; }
 
+    RefPtr<JSON::Array> ionGraphPasses() const { return m_ionGraphPasses; }
+
     StackCheck m_stackChecker;
     VM& m_vm;
     Plan& m_plan;
@@ -1444,6 +1449,8 @@ private:
     B3::SparseCollection<Node> m_nodes;
     SegmentedVector<RegisteredStructureSet, 16> m_structureSets;
     Prefix m_prefix;
+    RefPtr<JSON::Object> m_ionGraphFunction;
+    RefPtr<JSON::Array> m_ionGraphPasses;
 };
 
 } } // namespace JSC::DFG

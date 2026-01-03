@@ -30,7 +30,6 @@
 #include "RenderElement.h"
 #include "RenderStyle.h"
 #include "ResolvedStyle.h"
-#include "StyleInheritedData.h"
 #include "StyleResolver.h"
 #include "Text.h"
 #include "TextManipulationController.h"

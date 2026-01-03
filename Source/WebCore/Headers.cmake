@@ -3199,36 +3199,11 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     rendering/style/RenderStyleBase.h
     rendering/style/RenderStyleBase+GettersInlines.h
     rendering/style/RenderStyleConstants.h
-    rendering/style/SVGRenderStyle.h
-    rendering/style/SVGRenderStyleDefs.h
-    rendering/style/StyleAppleColorFilterData.h
-    rendering/style/StyleBackdropFilterData.h
-    rendering/style/StyleBackgroundData.h
-    rendering/style/StyleBorderImageData.h
-    rendering/style/StyleBoxData.h
     rendering/style/StyleCachedImage.h
     rendering/style/StyleContentAlignmentData.h
-    rendering/style/StyleCustomPropertyData.h
-    rendering/style/StyleDeprecatedFlexibleBoxData.h
-    rendering/style/StyleFilterData.h
-    rendering/style/StyleFlexibleBoxData.h
-    rendering/style/StyleFontData.h
     rendering/style/StyleGeneratedImage.h
-    rendering/style/StyleGridData.h
-    rendering/style/StyleGridItemData.h
     rendering/style/StyleImage.h
-    rendering/style/StyleInheritedData.h
-    rendering/style/StyleMarqueeData.h
-    rendering/style/StyleMaskBorderData.h
-    rendering/style/StyleMiscNonInheritedData.h
-    rendering/style/StyleMultiColData.h
-    rendering/style/StyleNonInheritedData.h
-    rendering/style/StyleRareInheritedData.h
-    rendering/style/StyleRareNonInheritedData.h
     rendering/style/StyleSelfAlignmentData.h
-    rendering/style/StyleSurroundData.h
-    rendering/style/StyleTransformData.h
-    rendering/style/StyleVisitedLinkColorData.h
 
     rendering/svg/RenderSVGInlineText.h
     rendering/svg/RenderSVGModelObject.h
@@ -3279,6 +3254,38 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     style/computed/StyleComputedStyleBase+GettersInlines.h
     style/computed/StyleComputedStyleProperties+GettersCustomInlines.h
     style/computed/StyleComputedStyleProperties+InitialCustomInlines.h
+
+    style/computed/data/StyleAppleColorFilterData.h
+    style/computed/data/StyleBackdropFilterData.h
+    style/computed/data/StyleBackgroundData.h
+    style/computed/data/StyleBorderImageData.h
+    style/computed/data/StyleBoxData.h
+    style/computed/data/StyleCustomPropertyData.h
+    style/computed/data/StyleDeprecatedFlexibleBoxData.h
+    style/computed/data/StyleFilterData.h
+    style/computed/data/StyleFlexibleBoxData.h
+    style/computed/data/StyleFontData.h
+    style/computed/data/StyleGridData.h
+    style/computed/data/StyleGridItemData.h
+    style/computed/data/StyleInheritedData.h
+    style/computed/data/StyleInheritedRareData.h
+    style/computed/data/StyleMarqueeData.h
+    style/computed/data/StyleMaskBorderData.h
+    style/computed/data/StyleMultiColumnData.h
+    style/computed/data/StyleNonInheritedData.h
+    style/computed/data/StyleNonInheritedMiscData.h
+    style/computed/data/StyleNonInheritedRareData.h
+    style/computed/data/StyleSurroundData.h
+    style/computed/data/StyleSVGData.h
+    style/computed/data/StyleSVGFillData.h
+    style/computed/data/StyleSVGLayoutData.h
+    style/computed/data/StyleSVGMarkerResourceData.h
+    style/computed/data/StyleSVGNonInheritedMiscData.h
+    style/computed/data/StyleSVGShadowData.h
+    style/computed/data/StyleSVGStopData.h
+    style/computed/data/StyleSVGStrokeData.h
+    style/computed/data/StyleTransformData.h
+    style/computed/data/StyleVisitedLinkColorData.h
 
     style/values/StyleValueTypes.h
 

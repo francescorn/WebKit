@@ -40,6 +40,7 @@
 #include "StackAlignment.h"
 #include <wtf/HashSet.h>
 #include <wtf/IndexMap.h>
+#include <wtf/JSONValues.h>
 #include <wtf/SequesteredMalloc.h>
 #include <wtf/SmallSet.h>
 #include <wtf/TZoneMalloc.h>
@@ -363,7 +364,10 @@ public:
 
     void setForceIRCRegisterAllocation() { m_forceIRC = true; }
     bool forceIRCRegisterAllocation() { return m_forceIRC; }
-    
+
+    void setIonGraphPasses(Ref<JSON::Array>&&);
+    void appendIonGraphPass(ASCIILiteral);
+
 private:
     friend class ::JSC::B3::Procedure;
     friend class BlockInsertionSet;
@@ -412,6 +416,7 @@ private:
     const char* m_lastPhaseName;
     std::unique_ptr<Disassembler> m_disassembler;
     const Ref<PrologueGenerator> m_defaultPrologueGenerator;
+    RefPtr<JSON::Array> m_ionGraphPasses;
 };
 
 } } } // namespace JSC::B3::Air

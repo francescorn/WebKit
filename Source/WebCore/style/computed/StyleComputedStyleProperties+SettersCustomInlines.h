@@ -91,7 +91,7 @@ inline void ComputedStyleProperties::setAppearance(StyleAppearance appearance)
 inline void ComputedStyleProperties::setBlendMode(BlendMode mode)
 {
     SET_NESTED(m_nonInheritedData, rareData, effectiveBlendMode, static_cast<unsigned>(mode));
-    SET(m_rareInheritedData, isInSubtreeWithBlendMode, mode != BlendMode::Normal);
+    SET(m_inheritedRareData, isInSubtreeWithBlendMode, mode != BlendMode::Normal);
 }
 
 inline void ComputedStyleProperties::setDisplay(DisplayType value)
@@ -110,7 +110,7 @@ inline void ComputedStyleProperties::setSpecifiedZIndex(ZIndex index)
 inline void ComputedStyleProperties::setCursor(Cursor cursor)
 {
     m_inheritedFlags.cursorType = static_cast<unsigned>(cursor.predefined);
-    SET(m_rareInheritedData, cursorImages, WTF::move(cursor.images));
+    SET(m_inheritedRareData, cursorImages, WTF::move(cursor.images));
 }
 
 // MARK: Support Font properties

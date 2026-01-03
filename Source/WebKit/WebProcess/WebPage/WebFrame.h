@@ -66,6 +66,15 @@ class IntRect;
 class LocalFrame;
 class PlatformMouseEvent;
 class RemoteFrame;
+class TextIndicator;
+
+namespace TextExtraction {
+struct ExtractedText;
+struct InteractionDescription;
+struct Interaction;
+struct Item;
+struct Request;
+}
 
 enum class FocusDirection : uint8_t;
 enum class FoundElementInRemoteFrame : bool;
@@ -276,6 +285,11 @@ public:
     void connectInspector(Inspector::FrontendChannel::ConnectionType);
     void disconnectInspector();
     void sendMessageToInspectorTarget(const String& message);
+
+    void requestTextExtraction(WebCore::TextExtraction::Request&&, CompletionHandler<void(WebCore::TextExtraction::Item&&)>&&);
+    void handleTextExtractionInteraction(WebCore::TextExtraction::Interaction&&, CompletionHandler<void(bool, String&&)>&&);
+    void describeTextExtractionInteraction(WebCore::TextExtraction::Interaction&&, CompletionHandler<void(WebCore::TextExtraction::InteractionDescription&&)>&&);
+    void takeSnapshotOfExtractedText(WebCore::TextExtraction::ExtractedText&&, CompletionHandler<void(RefPtr<WebCore::TextIndicator>&&)>&&);
 
 private:
     WebFrame(WebPage&, WebCore::FrameIdentifier);

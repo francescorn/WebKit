@@ -504,11 +504,14 @@ platform/graphics/coreimage/FEBlendCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEColorMatrixCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEComponentTransferCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FECompositeCoreImageApplier.mm @nonARC
+platform/graphics/coreimage/FEDropShadowCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEFloodCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEGaussianBlurCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEMergeCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEMorphologyCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FEOffsetCoreImageApplier.mm @nonARC
+platform/graphics/coreimage/FETileCoreImageApplier.mm @nonARC
+platform/graphics/coreimage/FETurbulenceCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/FilterImageCoreImage.mm @nonARC
 platform/graphics/coreimage/SourceAlphaCoreImageApplier.mm @nonARC
 platform/graphics/coreimage/SourceGraphicCoreImageApplier.mm @nonARC

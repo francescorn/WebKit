@@ -142,11 +142,9 @@ private:
         // Executed on the worker context's thread.
         void clearClientWrapper();
 
-        CheckedRef<WorkerLoaderProxy> checkedLoaderProxy();
-
         const Ref<ThreadableWebSocketChannelClientWrapper> m_workerClientWrapper;
         RefPtr<WorkerGlobalScope> m_workerGlobalScope;
-        WorkerLoaderProxy& m_loaderProxy;
+        const CheckedRef<WorkerLoaderProxy> m_loaderProxy;
         String m_taskMode;
         ThreadSafeWeakPtr<Peer> m_peer;
         const Ref<SocketProvider> m_socketProvider;
